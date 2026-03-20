@@ -8,21 +8,21 @@
         /* 基础设置 */
         body { font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", sans-serif; margin: 0; color: #333; background-color: #fff; line-height: 1.6; }
         
-        /* 顶部导航栏 - 模仿模板布局 */
+        /* 顶部导航栏 */
         .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 10%; border-bottom: 1px solid #eee; background: #fff; position: sticky; top: 0; z-index: 100; }
         .logo { font-weight: bold; font-size: 22px; color: #000; letter-spacing: 1px; }
         .nav-links { display: flex; gap: 25px; font-size: 14px; color: #666; }
-        .nav-links span { cursor: pointer; transition: 0.3s; }
-        .nav-links span:hover { color: #005a87; }
         .login-btn { background: #005a87; color: white; padding: 6px 18px; border-radius: 4px; text-decoration: none; font-size: 13px; }
 
-        /* 核心展示区域 - 替代大图 */
-        .hero { background: #1a1a1a; color: white; padding: 80px 10%; text-align: center; }
+        /* 核心黑色背景区域 - 加入了鬼 Logo 图标 */
+        .hero { background: #000; color: white; padding: 80px 10%; text-align: center; }
+        .ghost-icon { width: 80px; height: 80px; margin-bottom: 20px; filter: invert(1); opacity: 0.8; }
         .hero h1 { font-size: 36px; letter-spacing: 4px; margin: 0; color: #fff; }
         .hero p { font-size: 16px; opacity: 0.6; margin-top: 10px; letter-spacing: 2px; }
-        .hero-list { margin: 30px auto; max-width: 500px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; text-align: left; font-size: 15px; }
+        
+        .hero-list { margin: 30px auto; max-width: 500px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; text-align: left; font-size: 14px; background: rgba(255,255,255,0.05); }
 
-        /* 解决方案区域 - 三格布局 */
+        /* 解决方案区域 */
         .section { padding: 60px 10%; max-width: 1200px; margin: auto; }
         .section-header { text-align: center; margin-bottom: 50px; font-size: 24px; color: #005a87; position: relative; }
         .section-header::after { content: ''; display: block; width: 40px; height: 3px; background: #005a87; margin: 15px auto; }
@@ -30,24 +30,19 @@
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         .card { border: 1px solid #eee; border-radius: 4px; transition: 0.4s; background: #fdfdfd; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-color: #005a87; }
-        .card-header { height: 120px; background: #f4f4f4; display: flex; flex-direction: column; align-items: center; justify-content: center; border-bottom: 1px solid #eee; }
-        .card-header .title { font-size: 16px; font-weight: bold; color: #005a87; margin-bottom: 5px; }
-        .card-header .subtitle { font-size: 12px; color: #999; }
-        .card-content { padding: 25px; text-align: center; font-size: 18px; font-weight: bold; color: #222; }
+        .card-header { height: 100px; background: #f4f4f4; display: flex; flex-direction: column; align-items: center; justify-content: center; border-bottom: 1px solid #eee; }
+        .card-header .title { font-size: 15px; font-weight: bold; color: #005a87; }
+        .card-content { padding: 20px; text-align: center; font-size: 16px; font-weight: bold; color: #222; min-height: 60px; display: flex; align-items: center; justify-content: center; }
 
-        /* 底部消息与文章区域 */
+        /* 底部消息区域 */
         .bottom-container { background: #f9f9f9; border-top: 1px solid #eee; padding: 60px 10%; }
         .bottom-flex { display: flex; gap: 60px; max-width: 1200px; margin: auto; }
         .news-column { flex: 1; }
-        .news-item { padding: 12px 0; border-bottom: 1px dashed #ccc; display: flex; justify-content: space-between; font-size: 14px; }
-        .news-date { color: #999; margin-right: 15px; }
+        .news-item { padding: 10px 0; border-bottom: 1px dashed #ccc; display: flex; justify-content: space-between; font-size: 13px; }
         
         .article-column { flex: 1.2; }
         .article-column h2 { color: #005a87; font-size: 24px; margin-top: 0; }
-        .article-text { font-size: 16px; color: #555; line-height: 2; }
-
-        .btn-more { display: inline-block; margin-top: 25px; padding: 8px 25px; border: 1px solid #005a87; color: #005a87; text-decoration: none; font-size: 13px; border-radius: 2px; transition: 0.3s; }
-        .btn-more:hover { background: #005a87; color: #fff; }
+        .article-text { font-size: 15px; color: #555; line-height: 2; }
 
         footer { text-align: center; padding: 40px; font-size: 12px; color: #aaa; border-top: 1px solid #eee; }
     </style>
@@ -61,20 +56,21 @@
             <span>最新消息</span>
             <span>解决方案</span>
             <span>成员专区</span>
-            <span>联系我们</span>
             <a href="#" class="login-btn">会员登录</a>
         </div>
     </div>
 
     <div class="hero">
+        <img src="https://img.icons8.com/ios-filled/100/ffffff/ghost.png" class="ghost-icon" alt="Ghost Logo">
         <h1>MIDNIGHT GHOST / 午夜幽灵</h1>
         <p>核心集结 · 信仰传承</p>
         <div class="hero-list">
-            • 创始核心：你 (Mazda RX-7 FC3S)<br>
-            • 核心成员：伟杰 (Toyota GT86)<br>
-            • 核心成员：冠乐 (Nissan GT-R R34)<br>
-            • 核心成员：字典 (Lamborghini Gallardo)<br>
-            • 核心成员：俊豪 (Honda Civic Type R)
+            • 你 (Mazda RX-7 FC3S)<br>
+            • 伟杰 (Toyota GT86)<br>
+            • 冠乐 (Nissan GT-R R34)<br>
+            • 永杰 (Honda Civic - 灰色)<br>
+            • 字典 (Lamborghini Gallardo)<br>
+            • 俊豪 (Honda Civic Type R)
         </div>
     </div>
 
@@ -84,46 +80,39 @@
             <div class="card">
                 <div class="card-header">
                     <div class="title">弯道攻坚组</div>
-                    <div class="subtitle">Corner Attack Team</div>
                 </div>
                 <div class="card-content">你 & 伟杰</div>
             </div>
             <div class="card">
                 <div class="card-header">
                     <div class="title">战神直线组</div>
-                    <div class="subtitle">Drag Racing Team</div>
                 </div>
                 <div class="card-content">冠乐</div>
             </div>
             <div class="card">
                 <div class="card-header">
                     <div class="title">极速突破组</div>
-                    <div class="subtitle">Top Speed Team</div>
                 </div>
-                <div class="card-content">字典 & 俊豪</div>
+                <div class="card-content">永杰 & 字典 & 俊豪</div>
             </div>
         </div>
-        <div style="text-align:center;"><a href="#" class="btn-more">更多解决方案</a></div>
     </div>
 
     <div class="bottom-container">
         <div class="bottom-flex">
             <div class="news-column">
-                <h3 style="color: #005a87; border-bottom: 2px solid #005a87; display: inline-block; padding-bottom: 5px;">最新消息 / News</h3>
-                <div class="news-item"><span class="news-date">03.20</span> <span>你 (Mazda RX-7 FC3S) 战车整备完成</span></div>
-                <div class="news-item"><span class="news-date">03.20</span> <span>伟杰 (Toyota GT86) 弯道设定优化完毕</span></div>
-                <div class="news-item"><span class="news-date">03.18</span> <span>冠乐 (Nissan GT-R R34) 完成直线测试</span></div>
-                <div class="news-item"><span class="news-date">03.15</span> <span>字典 (Lamborghini Gallardo) 极速挑战达成</span></div>
-                <div class="news-item"><span class="news-date">03.12</span> <span>俊豪 (Honda Civic Type R) 全面升级完成</span></div>
-                <a href="#" class="btn-more">更多消息内容</a>
+                <h3 style="color: #005a87;">最新战报 / News</h3>
+                <div class="news-item"><span>03.20</span> <span>永杰 (灰色思域) 正式加入 Midnight Ghost</span></div>
+                <div class="news-item"><span>03.20</span> <span>你 (RX-7) 与 伟杰 (GT86) 组合战备中</span></div>
+                <div class="news-item"><span>03.18</span> <span>冠乐 (GTR R34) 刷新直线纪录</span></div>
+                <div class="news-item"><span>03.15</span> <span>字典 (Gallardo) 极速挑战达成</span></div>
             </div>
 
             <div class="article-column">
                 <h2>与风竞速，永不停歇</h2>
                 <div class="article-text">
-                    <p><strong>在这霓虹闪烁的夜晚，我们不仅是在驾驶，更是在追寻一种自由。</strong></p>
-                    <p>对于 Midnight Ghost 的每一位成员来说，车不仅仅是冰冷的机器，更是灵魂的延伸。每一台车，每一个零件，都承载着我们的梦想与热血。</p>
-                    <p>我们将这种对汽车的无限热爱，化为前行的动力。由你、伟杰、冠乐、字典和俊豪共同组成的创始核心，将始终保持敬畏，尊重速度，尊重每一台车背后的精神。</p>
+                    <p>对于 Midnight Ghost 的每一位成员来说，车不仅仅是机器，更是灵魂的延伸。从转子的嘶吼到 VTEC 的爆发，每一声引擎轰鸣都承载着我们的梦想。</p>
+                    <p>由你、伟杰、冠乐、永杰、字典和俊豪共同组成的创始核心，将始终保持敬畏。我们尊重速度，更尊重每一台车背后的精神。</p>
                     <p>在深夜的公路与赛道上，我们就是那抹永不退缩的幽灵。</p>
                 </div>
             </div>
