@@ -3,107 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Midnight Ghost</title>
+    <title>Midnight Phantoms Official</title>
     <style>
-        /* 1. 背景：傍晚天空的渐变色 (深蓝到橘红) */
         body {
-            background: linear-gradient(180deg, #1a2a6c, #b21f1f, #fdbb2d);
+            /* 就像背景图里的深蓝色夜空渐变 */
+            background: linear-gradient(180deg, #020210, #0d122b, #030312);
             background-attachment: fixed;
             color: white;
-            font-family: sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             margin: 0;
-            padding: 20px;
-            text-align: center;
-        }
-
-        /* 2. 顶部贴纸/图案区域 */
-        .sticker-box {
-            margin: 20px auto;
-            width: 120px;
-            height: 120px;
-            /* 这里放一个幽灵图标 */
-            background-image: url('https://img.icons8.com/ios-filled/100/ffffff/ghost.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
-        }
-
-        h1 {
-            font-size: 2em;
-            letter-spacing: 3px;
-            margin: 10px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        /* 3. 内容区块 */
-        .section {
-            background: rgba(0, 0, 0, 0.4); /* 半透明黑色，让文字清晰 */
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            backdrop-filter: blur(5px); /* 磨砂玻璃效果 */
-        }
-
-        h2 {
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-            padding-bottom: 10px;
-            color: #ffd700; /* 金色标题 */
-        }
-
-        .names {
-            font-size: 1.5em;
-            line-height: 2;
-        }
-
-        .article {
-            text-align: left;
-            line-height: 1.8;
-            font-size: 1.1em;
-        }
-
-        .car-list {
-            text-align: left;
-            list-style: none;
             padding: 0;
         }
 
-        .car-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+        /* 究极合影封面区域 */
+        .hero-banner {
+            width: 100%;
+            height: 60vh; /* 覆盖手机屏幕高度的 60% */
+            background-image: url('https://raw.githubusercontent.com/vio056761-sketch/Midnight-ghost-/main/team-photo.png'); /* 我假设你上传图片并命名为 team-photo.png */
+            background-size: cover;
+            background-position: center;
+            border-bottom: 3px solid #00f2fe; /* 配合蓝色霓虹灯颜色 */
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            position: relative;
+        }
+        
+        /* 如果你还没上传图片，我们先用纯黑色代替，直到你上传图片 */
+        /* .hero-banner { background-color: black; } */
+
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(0deg, rgba(13, 18, 43, 1), rgba(13, 18, 43, 0));
         }
 
-        .owner {
-            color: #ff4d4d;
-            font-weight: bold;
-            margin-right: 10px;
+        .container { padding: 20px; max-width: 800px; margin: auto; }
+
+        .about-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            margin: -30px 0 20px 0; /* 让文字部分稍微压到图片上一点 */
+            border-left: 4px solid #00f2fe; /* 霓虹蓝 */
+            line-height: 1.8;
+            position: relative;
+            z-index: 10;
         }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .car-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #222;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .car-card:hover {
+            border-color: #00f2fe; /* 霓虹蓝 */
+            transform: translateY(-5px);
+        }
+
+        .owner-tag {
+            color: #00f2fe; /* 霓虹蓝 */
+            font-weight: bold;
+            font-size: 0.9em;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .car-model {
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .footer { text-align: center; padding: 40px; opacity: 0.5; font-size: 0.8em; }
     </style>
 </head>
 <body>
 
-    <div class="sticker-box"></div>
-    <h1>MIDNIGHT GHOST</h1>
-    <p style="letter-spacing: 2px;">午夜幽灵车队</p>
+    <div class="hero-banner"></div>
 
-    <div class="section">
-        <h2>核心成员</h2>
-        <div class="names">
-            国栋 · 冠乐 · 伟杰 · 字典 · 俊豪
+    <div class="container">
+        <div class="about-section">
+            <h2 style="color:#00f2fe; margin-top:0; text-shadow: 0 0 10px #00f2fe;">动力之魂 · 核心集结</h2>
+            <p>我们是 Midnight Phantoms（午夜幽灵）。追求信仰，追求纯粹。无论是转子的嘶吼，战神的爆发，还是超跑的咆哮，都是我们在夜幕降临时寻找自由的动力。在 KL 的霓虹灯下，我们就是传奇。</p>
+            <p style="font-style: italic; font-size: 0.9em; color:#ddd;">—— 创始核心：你 · 伟杰 · 冠乐 · 字典 · 俊豪</p>
+        </div>
+
+        <h2 style="text-align: center; letter-spacing: 2px;">核心战车 & 战术分布</h2>
+        
+        <div class="grid">
+            <div class="car-card" style="border-color: #00f2fe; border-width: 2px; box-shadow: 0 0 10px rgba(0,242,254,0.3);">
+                <span class="owner-tag">弯道组 · 核心</span>
+                <div class="car-model">你 & 伟杰</div>
+                <p style="font-size: 0.8em; opacity: 0.7;">RX-7 FC3S & GT86<br>制霸山路，精准漂移。</p>
+            </div>
+
+            <div class="car-card">
+                <span class="owner-tag">直线组 · 战神</span>
+                <div class="car-model">冠乐</div>
+                <p style="font-size: 0.8em; opacity: 0.7;">Nissan GT-R R34<br>顶级爆发，无法超越。</p>
+            </div>
+
+            <div class="car-card">
+                <span class="owner-tag">直线组 · 极速</span>
+                <div class="car-model">字典 & 俊豪</div>
+                <p style="font-size: 0.8em; opacity: 0.7;">Gallardo & Type R<br>绝对力量，冲刺담당。</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            © 2026 Midnight Phantoms Team. Kuala Lumpur | Designed for the streets.
         </div>
     </div>
 
-    <div class="section">
-        <h2>动力之魂</h2>
-        <div class="article">
-            对赛车的热爱永不熄灭。我们聚集在夜幕降临的时刻，不仅是为了速度，更是为了那份纯粹的信仰。无论是转子的嘶吼，还是超跑的咆哮，都是我们灵魂的延伸。在 Midnight Ghost，每一台车都有它的生命，每一次驾驶都是与自由的对话。
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>我们的战车</h2>
-        <ul class="car-list">
-            <li><span class="owner">国栋:</span> Mazda RX-7 FC3S</li>
-            <li><span class="owner">冠乐:</span> Toyota GT86</li>
-            <li><span class="owner">伟杰:</s
-  
+</body>
+</html>
