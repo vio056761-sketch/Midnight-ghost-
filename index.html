@@ -1,135 +1,339 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Midnight Ghost | 官方网站</title>
+    <title>Midnight Ghost | Kitsune Spec</title>
     <style>
-        /* 基础设置 */
-        body { font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", sans-serif; margin: 0; color: #333; background-color: #fff; line-height: 1.6; }
+        /* 1. 基础极简样式 */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; cursor: crosshair; /* 鼠标变十字，更有仪式感 */ }
+
+        body {
+            /* 换成深邃的午夜蓝色调渐变 */
+            background: radial-gradient(circle at center, #001220 0%, #000000 100%);
+            background-color: #000b14;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 背景合照 */
+        .bg-photo {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('background.jpg');
+            background-size: cover; background-position: center;
+            opacity: 0.25; z-index: -2;
+            filter: saturate(0.5) brightness(0.8);
+        }
+
+        /* 2. 核心装饰：日本狐狸面具 & 鬼火动画 (Kitsune & Onibi) */
+        .kitsune-decor {
+            position: fixed; top: 50%; transform: translateY(-50%);
+            width: 35vw; height: 35vw;
+            z-index: -1; pointer-events: none;
+            opacity: 0.15;
+            /* 关键：霓虹蓝呼吸灯效果 */
+            filter: drop-shadow(0 0 15px #00d4ff);
+            animation: kitsunePulse 5s infinite ease-in-out;
+        }
         
-        /* 顶部导航栏 - 模仿模板布局 */
-        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 10%; border-bottom: 1px solid #eee; background: #fff; position: sticky; top: 0; z-index: 100; }
-        .logo { font-weight: bold; font-size: 22px; color: #000; letter-spacing: 1px; }
-        .nav-links { display: flex; gap: 25px; font-size: 14px; color: #666; }
-        .login-btn { background: #005a87; color: white; padding: 6px 18px; border-radius: 4px; text-decoration: none; font-size: 13px; }
+        @keyframes kitsunePulse {
+            0%, 100% { opacity: 0.15; filter: drop-shadow(0 0 15px #00d4ff); }
+            50% { opacity: 0.25; filter: drop-shadow(0 0 25px #00d4ff); }
+        }
 
-        /* 核心黑色背景区域 - 加入了鬼 Logo 图标 */
-        .hero { background: #000; color: white; padding: 80px 10%; text-align: center; }
-        .ghost-icon { width: 80px; height: 80px; margin-bottom: 20px; filter: invert(1); opacity: 0.8; }
-        .hero h1 { font-size: 36px; letter-spacing: 4px; margin: 0; color: #fff; }
-        .hero p { font-size: 16px; opacity: 0.6; margin-top: 10px; letter-spacing: 2px; }
+        /* 这里使用 SVG 代码生成狐狸面具图案 */
+        .kitsune-left { left: -8vw; }
+        .kitsune-right { right: -8vw; transform: translateY(-50%) scaleX(-1); }
+
+        /* 3. 动态漂浮的蓝色鬼火 (Onibi Particles) */
+        .onibi {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background: #00d4ff; /* 霓虹蓝 */
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            /* 鬼火发光效果 */
+            box-shadow: 0 0 20px #00d4ff, 0 0 40px #00d4ff, 0 0 60px #fff;
+            opacity: 0.8;
+            /* 动画：向上漂浮并在顶部淡出 */
+            animation: onibiFloat 10s infinite linear;
+        }
+
+        /* 鬼火漂浮动画定义 */
+        @keyframes onibiFloat {
+            0% { transform: translateY(100vh) scale(1); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-20vh) scale(0.5); opacity: 0; }
+        }
+
+        /* 生成不同大小和延迟的鬼火 */
+        .onibi:nth-child(1) { left: 10vw; animation-delay: 0s; width: 12px; height: 12px; }
+        .onibi:nth-child(2) { left: 30vw; animation-delay: 2s; width: 18px; height: 18px; }
+        .onibi:nth-child(3) { left: 50vw; animation-delay: 4s; width: 14px; height: 14px; }
+        .onibi:nth-child(4) { left: 70vw; animation-delay: 6s; width: 20px; height: 20px; }
+        .onibi:nth-child(5) { left: 90vw; animation-delay: 8s; width: 16px; height: 16px; }
+
+        /* 4. 语言切换按钮 (大字体，浮动) */
+        .lang-switcher {
+            position: fixed; top: 25px; right: 20px; z-index: 100;
+            display: flex; gap: 10px;
+        }
+        .lang-btn {
+            padding: 12px 20px; background: rgba(0, 85, 255, 0.2); border: 2px solid #0055ff;
+            color: #fff; cursor: pointer; border-radius: 10px; font-size: 1rem; font-weight: bold; transition: 0.3s;
+        }
+        .lang-btn.active { background: #00d4ff; border-color: #fff; color: #000; box-shadow: 0 0 20px #00d4ff; }
+
+        /* 5. 标题区 (超大字体，霸气感) */
+        .header { text-align: center; margin: 80px 0 40px 0; position: relative; z-index: 10; }
         
-        /* 全员名单列表 */
-        .hero-list { margin: 30px auto; max-width: 500px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; text-align: left; font-size: 14px; background: rgba(255,255,255,0.05); }
-
-        /* 解决方案区域 - 三格布局 */
-        .section { padding: 60px 10%; max-width: 1200px; margin: auto; }
-        .section-header { text-align: center; margin-bottom: 50px; font-size: 24px; color: #005a87; position: relative; }
-        .section-header::after { content: ''; display: block; width: 40px; height: 3px; background: #005a87; margin: 15px auto; }
+        /* 标题鬼图案 (发光 SVG图标) */
+        .ghost-icon {
+            width: 70px; height: 70px;
+            fill: #fff; /* 默认白色 */
+            filter: drop-shadow(0 0 15px #00d4ff);
+            margin-bottom: 15px;
+            display: inline-block;
+            animation: ghostFloat 4s infinite ease-in-out;
+        }
         
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-        .card { border: 1px solid #eee; border-radius: 4px; transition: 0.4s; background: #fdfdfd; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-color: #005a87; }
-        .card-header { height: 100px; background: #f4f4f4; display: flex; flex-direction: column; align-items: center; justify-content: center; border-bottom: 1px solid #eee; }
-        .card-header .title { font-size: 15px; font-weight: bold; color: #005a87; }
-        .card-content { padding: 20px; text-align: center; font-size: 16px; font-weight: bold; color: #222; min-height: 60px; display: flex; align-items: center; justify-content: center; }
+        @keyframes ghostFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
 
-        /* 底部消息与文章区域 */
-        .bottom-container { background: #f9f9f9; border-top: 1px solid #eee; padding: 60px 10%; }
-        .bottom-flex { display: flex; gap: 60px; max-width: 1200px; margin: auto; }
-        .news-column { flex: 1; }
-        .news-item { padding: 10px 0; border-bottom: 1px dashed #ccc; display: flex; justify-content: space-between; font-size: 13px; }
+        .header h1 {
+            font-size: 3.5rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            font-weight: 900;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        /* 6. “讯息列表展开” (保留) */
+        .team-list { width: 95%; max-width: 700px; z-index: 10; margin-bottom: 80px; }
         
-        .article-column { flex: 1.2; }
-        .article-column h2 { color: #005a87; font-size: 24px; margin-top: 0; }
-        .article-text { font-size: 15px; color: #555; line-height: 2; }
+        /* 成员卡片 (大尺寸) */
+        .member-item {
+            background: rgba(0, 20, 40, 0.85); border: 2px solid #003366;
+            border-radius: 20px; margin-bottom: 20px; cursor: pointer; transition: 0.3s;
+        }
+        .member-item:hover { border-color: #00d4ff; transform: scale(1.02); }
 
-        .btn-more { display: inline-block; margin-top: 25px; padding: 8px 25px; border: 1px solid #005a87; color: #005a87; text-decoration: none; font-size: 13px; border-radius: 2px; transition: 0.3s; }
-        .btn-more:hover { background: #005a87; color: #fff; }
+        /* 名字区域 (超级霸气大字体) */
+        .member-header { padding: 30px 35px; display: flex; justify-content: space-between; align-items: center; }
+        
+        .name-main { 
+            font-size: 2.2rem; /* 极大英文名 */
+            font-weight: 900; 
+            letter-spacing: 2px;
+            display: flex;
+            flex-direction: column;
+        }
+        .cn-sub { 
+            font-size: 1.3rem; /* 大中文名 */
+            color: #00d4ff; 
+            margin-top: 5px;
+            font-weight: bold;
+        }
 
-        footer { text-align: center; padding: 40px; font-size: 12px; color: #aaa; border-top: 1px solid #eee; }
+        .stars { color: #ffd700; font-size: 1.5rem; letter-spacing: 5px; }
+
+        /* 7. 展开详情 (保留) */
+        .member-details {
+            max-height: 0; overflow: hidden; transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0 35px; background: rgba(0,0,0,0.8);
+            border-top: 2px solid transparent;
+        }
+        .member-item.active .member-details { max-height: 550px; padding: 35px; border-top: 2px solid #003366; }
+
+        /* 职位标签 */
+        .ace-tag {
+            display: inline-block; padding: 8px 20px; border-radius: 8px;
+            background: linear-gradient(90deg, #ff0055, #ff4400); font-size: 1rem; font-weight: 900; margin-bottom: 20px;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+
+        .car-info { font-size: 1.2rem; color: #eee; line-height: 1.8; font-weight: bold; margin-bottom: 20px; }
+        .car-info strong { color: #00d4ff; font-size: 1.4rem; }
+
+        /* 个性化感言板块 */
+        .passion-article-container {
+            width: 100%;
+            height: 250px;
+            background: rgba(0, 212, 255, 0.05);
+            border: 2px solid #00d4ff;
+            border-radius: 12px;
+            padding: 25px;
+            color: #fff;
+            
+            /* 大字体排版 */
+            font-size: 1.1rem;
+            line-height: 1.8;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            overflow: hidden; /* 像讯息一样 */
+            
+            /* 发光呼吸灯效果 */
+            filter: drop-shadow(0 0 10px rgba(0,212,255,0.2));
+            animation: textBreathe 5s infinite ease-in-out;
+        }
+
+        @keyframes textBreathe {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(0,212,255,0.2)); border-color: #00d4ff; }
+            50% { filter: drop-shadow(0 0 20px rgba(0,212,255,0.5)); border-color: #fff; }
+        }
+
+        footer { padding: 60px; color: #003366; font-size: 1rem; font-weight: bold; text-align: center; margin-top: 50px; }
     </style>
 </head>
 <body>
 
-    <div class="navbar">
-        <div class="logo">MIDNIGHT GHOST</div>
-        <div class="nav-links">
-            <span>关于我们</span>
-            <span>最新消息</span>
-            <span>解决方案</span>
-            <span>成员专区</span>
-            <a href="#" class="login-btn">会员登录</a>
-        </div>
+    <div class="bg-photo"></div>
+    
+    <svg class="kitsune-decor kitsune-left" viewBox="0 0 512 512">
+        <path d="M416 32h-320a64.07 64.07 0 0 0-64 64v320a64.07 64.07 0 0 0 64 64h320a64.07 64.07 0 0 0 64-64v-320a64.07 64.07 0 0 0-64-64zm-192 128a32 32 0 1 1 32 32 32 32 0 0 1-32-32zm64 224a96.11 96.11 0 0 1-96-96h192a96.11 96.11 0 0 1-96 96zm96-192a32 32 0 1 1 32-32 32 32 0 0 1-32 32z"></path>
+    </svg>
+    <svg class="kitsune-decor kitsune-right" viewBox="0 0 512 512">
+        <path d="M416 32h-320a64.07 64.07 0 0 0-64 64v320a64.07 64.07 0 0 0 64 64h320a64.07 64.07 0 0 0 64-64v-320a64.07 64.07 0 0 0-64-64zm-192 128a32 32 0 1 1 32 32 32 32 0 0 1-32-32zm64 224a96.11 96.11 0 0 1-96-96h192a96.11 96.11 0 0 1-96 96zm96-192a32 32 0 1 1 32-32 32 32 0 0 1-32 32z"></path>
+    </svg>
+    
+    <div class="onibi"></div>
+    <div class="onibi"></div>
+    <div class="onibi"></div>
+    <div class="onibi"></div>
+    <div class="onibi"></div>
+
+    <div class="lang-switcher">
+        <button class="lang-btn active" onclick="changeLang('cn', this)">中文</button>
+        <button class="lang-btn" onclick="changeLang('en', this)">EN</button>
+        <button class="lang-btn" onclick="changeLang('ms', this)">BM</button>
     </div>
 
-    <div class="hero">
-        <img src="https://img.icons8.com/ios-filled/100/ffffff/ghost.png" class="ghost-icon" alt="Ghost Logo">
-        <h1>MIDNIGHT GHOST / 午夜幽灵</h1>
-        <p>核心集结 · 信仰传承</p>
-        <div class="hero-list">
-            • 你 (Mazda RX-7 FC3S)<br>
-            • 伟杰 (Toyota GT86)<br>
-            • 冠乐 (Nissan GT-R R34)<br>
-            • 永杰 (Honda Civic - 灰色)<br>
-            • 字典 (Lamborghini Gallardo)<br>
-            • 俊豪 (Honda Civic Type R)
-        </div>
+    <div class="header">
+        <svg class="ghost-icon" viewBox="0 0 512 512">
+            <path d="M416 32h-320a64.07 64.07 0 0 0-64 64v320a64.07 64.07 0 0 0 64 64h320a64.07 64.07 0 0 0 64-64v-320a64.07 64.07 0 0 0-64-64zm-192 128a32 32 0 1 1 32 32 32 32 0 0 1-32-32zm64 224a96.11 96.11 0 0 1-96-96h192a96.11 96.11 0 0 1-96 96zm96-192a32 32 0 1 1 32-32 32 32 0 0 1-32 32z"></path>
+        </svg>
+        <h1>MIDNIGHT GHOST</h1>
     </div>
 
-    <div class="section">
-        <div class="section-header">解决方案 / Solution</div>
-        <div class="grid">
-            <div class="card">
-                <div class="card-header">
-                    <div class="title">弯道攻坚组</div>
-                </div>
-                <div class="card-content">你 & 伟杰</div>
-            </div>
-            <div class="card">
-                <div class="card-header">
-                    <div class="title">战神直线组</div>
-                </div>
-                <div class="card-content">冠乐</div>
-            </div>
-            <div class="card">
-                <div class="card-header">
-                    <div class="title">极速突破组</div>
-                </div>
-                <div class="card-content">永杰 & 字典 & 俊豪</div>
-            </div>
+    <div class="team-list" id="teamList">
         </div>
-        <div style="text-align:center;"><a href="#" class="btn-more">更多解决方案</a></div>
-    </div>
 
-    <div class="bottom-container">
-        <div class="bottom-flex">
-            <div class="news-column">
-                <h3 style="color: #005a87;">最新战报 / News</h3>
-                <div class="news-item"><span>03.20</span> <span>永杰 (灰色思域) 正式加入 Midnight Ghost</span></div>
-                <div class="news-item"><span>03.20</span> <span>你 (RX-7) 与 伟杰 (GT86) 组合战备中</span></div>
-                <div class="news-item"><span>03.18</span> <span>冠乐 (GTR R34) 刷新直线纪录</span></div>
-                <div class="news-item"><span>03.15</span> <span>字典 (Gallardo) 极速挑战达成</span></div>
-                <div class="news-item"><span>03.12</span> <span>俊豪 (Type R) 全面升级完成</span></div>
-                <a href="#" class="btn-more">更多消息内容</a>
-            </div>
+    <footer>MIDNIGHT GHOST MALAYSIA · &copy; 2026</footer>
 
-            <div class="article-column">
-                <h2>与风竞速，永不停歇</h2>
-                <div class="article-text">
-                    <p>对于 Midnight Ghost 的每一位成员来说，车不仅仅是冰冷的机器，更是灵魂的延伸。从转子的嘶吼到 VTEC 的爆发，每一声引擎轰鸣都承载着我们的梦想。</p>
-                    <p>由你、伟杰、冠乐、永杰、字典和俊豪共同组成的创始核心，将始终保持敬畏。我们尊重速度，更尊重每一台车背后的精神。</p>
-                    <p>在深夜的公路与赛道上，我们就是那抹永不退缩的幽灵。</p>
+    <script>
+        // 核心数据 (包含多语言、车型修正和个性化感言)
+        const teamData = [
+            { enName: "KOKTONG", cnName: "果冻", stars: "★★★★★", car: "Mazda RX-8", 
+              desc: { cn: "团队核心 Leader", en: "Team Leader", ms: "Ketua Pasukan" },
+              tag: { cn: "王牌车手", en: "ACE DRIVER", ms: "PEMANDU ACE" },
+              passion: {
+                cn: "作为队长，我深知车不仅仅是工具。它是我们午夜里的幽灵，是唯一听懂我们心跳的伴侣。每一次引擎的发动，都带走了悲伤，留下了速度带来的无限感激。",
+                en: "AS LEADER, A CAR IS MORE THAN A TOOL. IT IS THE PHANTOM IN OUR MIDNIGHT, THE ONLY PARTNER THAT HEARS OUR HEARTBEAT. EVERY ENGINE START TAKES AWAY THE SORROW, LEAVING AN INFINITE APPRECIATION FOR SPEED.",
+                ms: "SEBAGAI KETUA, KERETA BUKAN SEKADAR ALAT. IA ADALAH HANTU DI TENGAH MALAM KAMI, SATU-SATUNYA PASANGAN YANG MENDENGAR DEGUPAN JANTUNG KAMI."
+              }
+            },
+            { enName: "WEIJIE", cnName: "伟杰", stars: "★★★★★", car: "Toyota 86", 
+              desc: { cn: "核心成员", en: "Core Member", ms: "Ahli Teras" },
+              tag: { cn: "王牌车手", en: "ACE DRIVER", ms: "PEMANDU ACE" },
+              passion: {
+                cn: "86不仅仅是情怀，更是对纯粹驾驶乐趣的追求。感谢它带给我的每一次人车合一，带走了悲伤，留下了完美的轨迹。",
+                en: "86 IS MORE THAN EMOTION; IT'S THE PURSUIT OF PURE DRIVING JOY. THANKS TO EVERY ONENESS OF CAR AND DRIVER, IT TAKES AWAY THE SORROW, LEAVING A PERFECT TRAJECTORY.",
+                ms: "86 BUKAN SEKADAR EMOSI; IA ADALAH PENGEJARAN KESERONOKAN MEMANDU SEBENAR."
+              }
+            },
+            { enName: "GUANLE", cnName: "冠乐", stars: "★★★★★", car: "Nissan Silvia S13", 
+              desc: { cn: "战术指挥", en: "Tactician", ms: "Taktikal Pasukan" },
+              tag: { cn: "王牌车手", en: "ACE DRIVER", ms: "PEMANDU ACE" },
+              passion: {
+                cn: "S13带给我的是原始的力量，是对速度最纯粹的感激。每一次在黑暗中滑行，都是在书写我们自己的传说。这里的夜晚永不落幕。",
+                en: "S13 BRINGS RAW POWER, A PURE APPRECIATION FOR SPEED. EVERY GLIDE IN THE DARKNESS WRITES OUR OWN LEGEND. THE NIGHTS HERE NEVER END.",
+                ms: "S13 MEMBAWA KUASA MENTAH, PENGHARGAAN SEBENAR TERHADAP KELAJUAN."
+              }
+            },
+            { enName: "ZIDIAN", cnName: "子典", stars: "★★★★★", car: "Lamborghini Gallardo", 
+              desc: { cn: "竞速先锋", en: "Racing Vanguard", ms: "Perintis Perlumbaan" },
+              tag: { cn: "王牌车手", en: "ACE DRIVER", ms: "PEMANDU ACE" },
+              passion: {
+                cn: "兰博基尼不仅仅是速度，更是对完美的追求。感谢它每一次带我飞越悲伤，触碰自由的无限可能。",
+                en: "LAMBORGHINI IS MORE THAN SPEED; IT'S THE PURSUIT OF PERFECTION. THANKS TO EVERY START, IT TAKES ME BEYOND THE SORROW, TOUCHING INFINITE POSSIBILITIES OF FREEDOM.",
+                ms: "LAMBORGHINI BUKAN SEKADAR KELAJUAN; IA ADALAH PENGEJARAN KESEMPURNAAN."
+              }
+            },
+            { enName: "JUNHAO", cnName: "俊豪", stars: "★★★★★", car: "Honda Civic Type R (FL5)", 
+              desc: { cn: "团队协作", en: "Team Coordination", ms: "Koordinasi Pasukan" },
+              tag: { cn: "王牌车手", en: "ACE DRIVER", ms: "PEMANDU ACE" },
+              passion: {
+                cn: "FL5是对技术的最高致敬。感谢团队的每一次协同，每一次突破，都是对速度最热血的感激。",
+                en: "FL5 IS THE HIGHEST TRIBUTE TO TECHNOLOGY. THANKS TO EVERY TEAM COORDINATION, EVERY BREAKTHROUGH, IT IS A FIERY APPRECIATION FOR SPEED.",
+                ms: "FL5 ADALAH PENGHORMATAN TERTINGGI KEPADA TEKNOLOGI."
+              }
+            },
+            { enName: "YONGJIE", cnName: "勇杰", stars: "★★★★★", car: "Honda Civic Type R (FL5)", 
+              desc: { cn: "车辆改装", en: "Car Modification", ms: "Modifikasi Kereta" },
+              tag: { cn: "王牌车手", en: "ACE DRIVER", ms: "PEMANDU ACE" },
+              passion: {
+                cn: "车身的每一次改装，都是对完美的感激。FL5带给我的不仅仅是速度，更是对无限可能的追求。",
+                en: "EVERY MODIFICATION IS AN APPRECIATION FOR PERFECTION. FL5 BRINGS ME MORE THAN SPEED; IT'S THE PURSUIT OF INFINITE POSSIBILITIES.",
+                ms: "SETIAP MODIFIKASI ADALAH PENGHARGAAN TERHADAP KESEMPURNAAN."
+              }
+            }
+        ];
+
+        let currentLang = 'cn';
+
+        function renderTeam() {
+            const list = document.getElementById('teamList');
+            list.innerHTML = teamData.map(m => `
+                <div class="member-item" onclick="toggleDetails(this)">
+                    <div class="member-header">
+                        <div class="name-main">
+                            ${m.enName}
+                            <span class="cn-sub">${m.cnName}</span>
+                        </div>
+                        <div class="stars">${m.stars}</div>
+                    </div>
+                    <div class="member-details">
+                        <div class="ace-tag">${m.tag[currentLang]}</div>
+                        <div class="car-info">
+                            ${m.desc[currentLang]}<br>
+                            ${currentLang === 'cn' ? '专属座驾' : currentLang === 'en' ? 'Drive' : 'Kenderaan'}: <strong>${m.car}</strong>
+                        </div>
+                        <div class="passion-article-container">
+                            ${m.passion[currentLang]}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
+            `).join('');
+        }
 
-    <footer>
-        &copy; 2026 MIDNIGHT GHOST TEAM. ALL RIGHTS RESERVED. Kuala Lumpur.
-    </footer>
+        // 控制列表展开/收起的 JS 函数
+        function toggleDetails(element) {
+            element.classList.toggle('active');
+        }
 
+        // 三语切换函数
+        function changeLang(lang, btn) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderTeam();
+        }
+
+        // 初始渲染
+        renderTeam();
+    </script>
 </body>
-                                                </html>
+</html>
     
