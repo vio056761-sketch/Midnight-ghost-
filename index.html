@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Midnight Ghost | Kitsune Spec</title>
+    <title>Midnight Ghost | Tech Spec</title>
     <style>
-        /* 1. 基础极简样式 */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; cursor: crosshair; /* 鼠标变十字，更有仪式感 */ }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial Black', sans-serif; }
 
         body {
-            /* 换成深邃的午夜蓝色调渐变 */
-            background: radial-gradient(circle at center, #001220 0%, #000000 100%);
+            /* 纯粹的午夜颜色 (深邃蓝色渐变) */
+            background: radial-gradient(circle at top, #001a2c 0%, #00050a 100%);
             background-color: #000b14;
             color: #fff;
             min-height: 100vh;
@@ -18,277 +17,108 @@
             flex-direction: column;
             align-items: center;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
         }
 
-        /* 背景合照 */
-        .bg-photo {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('background.jpg');
-            background-size: cover; background-position: center;
-            opacity: 0.25; z-index: -2;
-            filter: saturate(0.5) brightness(0.8);
-        }
-
-        /* 2. 核心装饰：日本狐狸面具 & 鬼火动画 (Kitsune & Onibi) */
+        /* 日本狐狸装饰 - 保持低调透明度 */
         .kitsune-decor {
             position: fixed; top: 50%; transform: translateY(-50%);
-            width: 35vw; height: 35vw;
-            z-index: -1; pointer-events: none;
-            opacity: 0.15;
-            /* 关键：霓虹蓝呼吸灯效果 */
-            filter: drop-shadow(0 0 15px #00d4ff);
-            animation: kitsunePulse 5s infinite ease-in-out;
+            width: 30vw; height: 30vw; fill: #00d4ff; opacity: 0.05; z-index: -1;
         }
-        
-        @keyframes kitsunePulse {
-            0%, 100% { opacity: 0.15; filter: drop-shadow(0 0 15px #00d4ff); }
-            50% { opacity: 0.25; filter: drop-shadow(0 0 25px #00d4ff); }
-        }
+        .kitsune-left { left: -5vw; }
+        .kitsune-right { right: -5vw; transform: translateY(-50%) scaleX(-1); }
 
-        /* 这里使用 SVG 代码生成狐狸面具图案 */
-        .kitsune-left { left: -8vw; }
-        .kitsune-right { right: -8vw; transform: translateY(-50%) scaleX(-1); }
-
-        /* 3. 动态漂浮的蓝色鬼火 (Onibi Particles) */
+        /* 鬼火粒子 - 调小一点，像冷光 */
         .onibi {
-            position: fixed;
-            width: 15px;
-            height: 15px;
-            background: #00d4ff; /* 霓虹蓝 */
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: -1;
-            /* 鬼火发光效果 */
-            box-shadow: 0 0 20px #00d4ff, 0 0 40px #00d4ff, 0 0 60px #fff;
-            opacity: 0.8;
-            /* 动画：向上漂浮并在顶部淡出 */
-            animation: onibiFloat 10s infinite linear;
+            position: fixed; width: 10px; height: 10px; background: #00d4ff;
+            border-radius: 50%; pointer-events: none; z-index: -1;
+            box-shadow: 0 0 15px #00d4ff; opacity: 0.6;
+            animation: onibiFloat 8s infinite linear;
         }
-
-        /* 鬼火漂浮动画定义 */
         @keyframes onibiFloat {
-            0% { transform: translateY(100vh) scale(1); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-20vh) scale(0.5); opacity: 0; }
+            0% { transform: translateY(100vh); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-10vh); opacity: 0; }
         }
 
-        /* 生成不同大小和延迟的鬼火 */
-        .onibi:nth-child(1) { left: 10vw; animation-delay: 0s; width: 12px; height: 12px; }
-        .onibi:nth-child(2) { left: 30vw; animation-delay: 2s; width: 18px; height: 18px; }
-        .onibi:nth-child(3) { left: 50vw; animation-delay: 4s; width: 14px; height: 14px; }
-        .onibi:nth-child(4) { left: 70vw; animation-delay: 6s; width: 20px; height: 20px; }
-        .onibi:nth-child(5) { left: 90vw; animation-delay: 8s; width: 16px; height: 16px; }
-
-        /* 4. 语言切换按钮 (大字体，浮动) */
-        .lang-switcher {
-            position: fixed; top: 25px; right: 20px; z-index: 100;
-            display: flex; gap: 10px;
-        }
+        /* 语言切换 */
+        .lang-switcher { position: fixed; top: 25px; right: 20px; z-index: 100; display: flex; gap: 10px; }
         .lang-btn {
-            padding: 12px 20px; background: rgba(0, 85, 255, 0.2); border: 2px solid #0055ff;
-            color: #fff; cursor: pointer; border-radius: 10px; font-size: 1rem; font-weight: bold; transition: 0.3s;
+            padding: 10px 18px; background: rgba(0, 85, 255, 0.1); border: 2px solid #0044aa;
+            color: #fff; cursor: pointer; border-radius: 8px; font-weight: bold; transition: 0.3s;
         }
-        .lang-btn.active { background: #00d4ff; border-color: #fff; color: #000; box-shadow: 0 0 20px #00d4ff; }
+        .lang-btn.active { background: #00d4ff; border-color: #fff; color: #000; box-shadow: 0 0 15px #00d4ff; }
 
-        /* 5. 标题区 (超大字体，霸气感) */
-        .header { text-align: center; margin: 80px 0 40px 0; position: relative; z-index: 10; }
-        
-        /* 标题鬼图案 (发光 SVG图标) */
-        .ghost-icon {
-            width: 70px; height: 70px;
-            fill: #fff; /* 默认白色 */
-            filter: drop-shadow(0 0 15px #00d4ff);
-            margin-bottom: 15px;
-            display: inline-block;
-            animation: ghostFloat 4s infinite ease-in-out;
-        }
-        
-        @keyframes ghostFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+        /* 标题 */
+        .header { text-align: center; margin: 80px 0 40px 0; }
+        .header h1 { font-size: 3.5rem; letter-spacing: 12px; font-weight: 900; text-shadow: 0 0 20px #00d4ff; }
 
-        .header h1 {
-            font-size: 3.5rem;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 8px;
-            font-weight: 900;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-        }
-
-        /* 6. “讯息列表展开” (保留) */
-        .team-list { width: 95%; max-width: 700px; z-index: 10; margin-bottom: 80px; }
+        /* 列表 */
+        .team-list { width: 95%; max-width: 750px; z-index: 10; margin-bottom: 80px; }
         
-        /* 成员卡片 (大尺寸) */
         .member-item {
-            background: rgba(0, 20, 40, 0.85); border: 2px solid #003366;
-            border-radius: 20px; margin-bottom: 20px; cursor: pointer; transition: 0.3s;
+            background: rgba(0, 30, 60, 0.4); border: 2px solid #002244;
+            border-radius: 15px; margin-bottom: 15px; cursor: pointer; transition: 0.3s;
         }
-        .member-item:hover { border-color: #00d4ff; transform: scale(1.02); }
+        .member-item:hover { border-color: #00d4ff; background: rgba(0, 40, 80, 0.6); }
 
-        /* 名字区域 (超级霸气大字体) */
-        .member-header { padding: 30px 35px; display: flex; justify-content: space-between; align-items: center; }
-        
-        .name-main { 
-            font-size: 2.2rem; /* 极大英文名 */
-            font-weight: 900; 
-            letter-spacing: 2px;
-            display: flex;
-            flex-direction: column;
-        }
-        .cn-sub { 
-            font-size: 1.3rem; /* 大中文名 */
-            color: #00d4ff; 
-            margin-top: 5px;
-            font-weight: bold;
-        }
+        .member-header { padding: 30px; display: flex; justify-content: space-between; align-items: center; }
+        .name-main { font-size: 2.2rem; font-weight: 900; }
+        .cn-sub { font-size: 1.2rem; color: #00d4ff; display: block; }
 
-        .stars { color: #ffd700; font-size: 1.5rem; letter-spacing: 5px; }
-
-        /* 7. 展开详情 (保留) */
+        /* 参数面板样式 */
         .member-details {
-            max-height: 0; overflow: hidden; transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 0 35px; background: rgba(0,0,0,0.8);
-            border-top: 2px solid transparent;
+            max-height: 0; overflow: hidden; transition: 0.5s ease;
+            padding: 0 30px; background: rgba(0,0,0,0.3);
         }
-        .member-item.active .member-details { max-height: 550px; padding: 35px; border-top: 2px solid #003366; }
+        .member-item.active .member-details { max-height: 500px; padding: 30px; border-top: 1px solid #003366; }
 
-        /* 职位标签 */
-        .ace-tag {
-            display: inline-block; padding: 8px 20px; border-radius: 8px;
-            background: linear-gradient(90deg, #ff0055, #ff4400); font-size: 1rem; font-weight: 900; margin-bottom: 20px;
-            text-transform: uppercase; letter-spacing: 2px;
+        .spec-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
+            font-family: 'Courier New', Courier, monospace; /* 机械质感字体 */
         }
+        .spec-item { border-left: 3px solid #00d4ff; padding-left: 15px; margin-bottom: 10px; }
+        .spec-label { font-size: 0.9rem; color: #0088ff; text-transform: uppercase; display: block; }
+        .spec-value { font-size: 1.3rem; color: #fff; font-weight: bold; }
 
-        .car-info { font-size: 1.2rem; color: #eee; line-height: 1.8; font-weight: bold; margin-bottom: 20px; }
-        .car-info strong { color: #00d4ff; font-size: 1.4rem; }
-
-        /* 个性化感言板块 */
-        .passion-article-container {
-            width: 100%;
-            height: 250px;
-            background: rgba(0, 212, 255, 0.05);
-            border: 2px solid #00d4ff;
-            border-radius: 12px;
-            padding: 25px;
-            color: #fff;
-            
-            /* 大字体排版 */
-            font-size: 1.1rem;
-            line-height: 1.8;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            overflow: hidden; /* 像讯息一样 */
-            
-            /* 发光呼吸灯效果 */
-            filter: drop-shadow(0 0 10px rgba(0,212,255,0.2));
-            animation: textBreathe 5s infinite ease-in-out;
-        }
-
-        @keyframes textBreathe {
-            0%, 100% { filter: drop-shadow(0 0 10px rgba(0,212,255,0.2)); border-color: #00d4ff; }
-            50% { filter: drop-shadow(0 0 20px rgba(0,212,255,0.5)); border-color: #fff; }
-        }
-
-        footer { padding: 60px; color: #003366; font-size: 1rem; font-weight: bold; text-align: center; margin-top: 50px; }
+        footer { padding: 50px; color: #003366; font-size: 0.9rem; text-align: center; }
     </style>
 </head>
 <body>
 
-    <div class="bg-photo"></div>
-    
-    <svg class="kitsune-decor kitsune-left" viewBox="0 0 512 512">
-        <path d="M416 32h-320a64.07 64.07 0 0 0-64 64v320a64.07 64.07 0 0 0 64 64h320a64.07 64.07 0 0 0 64-64v-320a64.07 64.07 0 0 0-64-64zm-192 128a32 32 0 1 1 32 32 32 32 0 0 1-32-32zm64 224a96.11 96.11 0 0 1-96-96h192a96.11 96.11 0 0 1-96 96zm96-192a32 32 0 1 1 32-32 32 32 0 0 1-32 32z"></path>
-    </svg>
-    <svg class="kitsune-decor kitsune-right" viewBox="0 0 512 512">
-        <path d="M416 32h-320a64.07 64.07 0 0 0-64 64v320a64.07 64.07 0 0 0 64 64h320a64.07 64.07 0 0 0 64-64v-320a64.07 64.07 0 0 0-64-64zm-192 128a32 32 0 1 1 32 32 32 32 0 0 1-32-32zm64 224a96.11 96.11 0 0 1-96-96h192a96.11 96.11 0 0 1-96 96zm96-192a32 32 0 1 1 32-32 32 32 0 0 1-32 32z"></path>
-    </svg>
-    
-    <div class="onibi"></div>
-    <div class="onibi"></div>
-    <div class="onibi"></div>
-    <div class="onibi"></div>
-    <div class="onibi"></div>
+    <div class="onibi" style="left: 15vw; animation-delay: 0s;"></div>
+    <div class="onibi" style="left: 45vw; animation-delay: 3s;"></div>
+    <div class="onibi" style="left: 85vw; animation-delay: 5s;"></div>
+
+    <svg class="kitsune-decor kitsune-left" viewBox="0 0 512 512"><path d="M416 32h-320a64.07 64.07 0 0 0-64 64v320a64.07 64.07 0 0 0 64 64h320a64.07 64.07 0 0 0 64-64v-320a64.07 64.07 0 0 0-64-64zm-192 128a32 32 0 1 1 32 32 32 32 0 0 1-32-32zm64 224a96.11 96.11 0 0 1-96-96h192a96.11 96.11 0 0 1-96 96zm96-192a32 32 0 1 1 32-32 32 32 0 0 1-32 32z"></path></svg>
+    <svg class="kitsune-decor kitsune-right" viewBox="0 0 512 512"><path d="M416 32h-320a64.07 64.07 0 0 0-64 64v320a64.07 64.07 0 0 0 64 64h320a64.07 64.07 0 0 0 64-64v-320a64.07 64.07 0 0 0-64-64zm-192 128a32 32 0 1 1 32 32 32 32 0 0 1-32-32zm64 224a96.11 96.11 0 0 1-96-96h192a96.11 96.11 0 0 1-96 96zm96-192a32 32 0 1 1 32-32 32 32 0 0 1-32 32z"></path></svg>
 
     <div class="lang-switcher">
-        <button class="lang-btn active" onclick="changeLang('cn', this)">中文</button>
+        <button class="lang-btn active" onclick="changeLang('cn', this)">CN</button>
         <button class="lang-btn" onclick="changeLang('en', this)">EN</button>
-        <button class="lang-btn" onclick="changeLang('ms', this)">BM</button>
     </div>
 
     <div class="header">
-        <svg class="ghost-icon" viewBox="0 0 512 512">
-            <path d="M416 32h-320a64.07 64.07 0 0 0-64 64v320a64.07 64.07 0 0 0 64 64h320a64.07 64.07 0 0 0 64-64v-320a64.07 64.07 0 0 0-64-64zm-192 128a32 32 0 1 1 32 32 32 32 0 0 1-32-32zm64 224a96.11 96.11 0 0 1-96-96h192a96.11 96.11 0 0 1-96 96zm96-192a32 32 0 1 1 32-32 32 32 0 0 1-32 32z"></path>
-        </svg>
         <h1>MIDNIGHT GHOST</h1>
     </div>
 
-    <div class="team-list" id="teamList">
-        </div>
+    <div class="team-list" id="teamList"></div>
 
-    <footer>MIDNIGHT GHOST MALAYSIA · &copy; 2026</footer>
+    <footer>PERFORMANCE SPECIFICATIONS · 2026</footer>
 
     <script>
-        // 核心数据 (包含多语言、车型修正和个性化感言)
         const teamData = [
-            { enName: "KOKTONG", cnName: "果冻", stars: "★★★★★", car: "Mazda RX-8", 
-              desc: { cn: "团队核心 Leader", en: "Team Leader", ms: "Ketua Pasukan" },
-              tag: { cn: "王牌车手", en: "ACE DRIVER", ms: "PEMANDU ACE" },
-              passion: {
-                cn: "作为队长，我深知车不仅仅是工具。它是我们午夜里的幽灵，是唯一听懂我们心跳的伴侣。每一次引擎的发动，都带走了悲伤，留下了速度带来的无限感激。",
-                en: "AS LEADER, A CAR IS MORE THAN A TOOL. IT IS THE PHANTOM IN OUR MIDNIGHT, THE ONLY PARTNER THAT HEARS OUR HEARTBEAT. EVERY ENGINE START TAKES AWAY THE SORROW, LEAVING AN INFINITE APPRECIATION FOR SPEED.",
-                ms: "SEBAGAI KETUA, KERETA BUKAN SEKADAR ALAT. IA ADALAH HANTU DI TENGAH MALAM KAMI, SATU-SATUNYA PASANGAN YANG MENDENGAR DEGUPAN JANTUNG KAMI."
-              }
-            },
-            { enName: "WEIJIE", cnName: "伟杰", stars: "★★★★★", car: "Toyota 86", 
-              desc: { cn: "核心成员", en: "Core Member", ms: "Ahli Teras" },
-              tag: { cn: "王牌车手", en: "ACE DRIVER", ms: "PEMANDU ACE" },
-              passion: {
-                cn: "86不仅仅是情怀，更是对纯粹驾驶乐趣的追求。感谢它带给我的每一次人车合一，带走了悲伤，留下了完美的轨迹。",
-                en: "86 IS MORE THAN EMOTION; IT'S THE PURSUIT OF PURE DRIVING JOY. THANKS TO EVERY ONENESS OF CAR AND DRIVER, IT TAKES AWAY THE SORROW, LEAVING A PERFECT TRAJECTORY.",
-                ms: "86 BUKAN SEKADAR EMOSI; IA ADALAH PENGEJARAN KESERONOKAN MEMANDU SEBENAR."
-              }
-            },
-            { enName: "GUANLE", cnName: "冠乐", stars: "★★★★★", car: "Nissan Silvia S13", 
-              desc: { cn: "战术指挥", en: "Tactician", ms: "Taktikal Pasukan" },
-              tag: { cn: "王牌车手", en: "ACE DRIVER", ms: "PEMANDU ACE" },
-              passion: {
-                cn: "S13带给我的是原始的力量，是对速度最纯粹的感激。每一次在黑暗中滑行，都是在书写我们自己的传说。这里的夜晚永不落幕。",
-                en: "S13 BRINGS RAW POWER, A PURE APPRECIATION FOR SPEED. EVERY GLIDE IN THE DARKNESS WRITES OUR OWN LEGEND. THE NIGHTS HERE NEVER END.",
-                ms: "S13 MEMBAWA KUASA MENTAH, PENGHARGAAN SEBENAR TERHADAP KELAJUAN."
-              }
-            },
-            { enName: "ZIDIAN", cnName: "子典", stars: "★★★★★", car: "Lamborghini Gallardo", 
-              desc: { cn: "竞速先锋", en: "Racing Vanguard", ms: "Perintis Perlumbaan" },
-              tag: { cn: "王牌车手", en: "ACE DRIVER", ms: "PEMANDU ACE" },
-              passion: {
-                cn: "兰博基尼不仅仅是速度，更是对完美的追求。感谢它每一次带我飞越悲伤，触碰自由的无限可能。",
-                en: "LAMBORGHINI IS MORE THAN SPEED; IT'S THE PURSUIT OF PERFECTION. THANKS TO EVERY START, IT TAKES ME BEYOND THE SORROW, TOUCHING INFINITE POSSIBILITIES OF FREEDOM.",
-                ms: "LAMBORGHINI BUKAN SEKADAR KELAJUAN; IA ADALAH PENGEJARAN KESEMPURNAAN."
-              }
-            },
-            { enName: "JUNHAO", cnName: "俊豪", stars: "★★★★★", car: "Honda Civic Type R (FL5)", 
-              desc: { cn: "团队协作", en: "Team Coordination", ms: "Koordinasi Pasukan" },
-              tag: { cn: "王牌车手", en: "ACE DRIVER", ms: "PEMANDU ACE" },
-              passion: {
-                cn: "FL5是对技术的最高致敬。感谢团队的每一次协同，每一次突破，都是对速度最热血的感激。",
-                en: "FL5 IS THE HIGHEST TRIBUTE TO TECHNOLOGY. THANKS TO EVERY TEAM COORDINATION, EVERY BREAKTHROUGH, IT IS A FIERY APPRECIATION FOR SPEED.",
-                ms: "FL5 ADALAH PENGHORMATAN TERTINGGI KEPADA TEKNOLOGI."
-              }
-            },
-            { enName: "YONGJIE", cnName: "勇杰", stars: "★★★★★", car: "Honda Civic Type R (FL5)", 
-              desc: { cn: "车辆改装", en: "Car Modification", ms: "Modifikasi Kereta" },
-              tag: { cn: "王牌车手", en: "ACE DRIVER", ms: "PEMANDU ACE" },
-              passion: {
-                cn: "车身的每一次改装，都是对完美的感激。FL5带给我的不仅仅是速度，更是对无限可能的追求。",
-                en: "EVERY MODIFICATION IS AN APPRECIATION FOR PERFECTION. FL5 BRINGS ME MORE THAN SPEED; IT'S THE PURSUIT OF INFINITE POSSIBILITIES.",
-                ms: "SETIAP MODIFIKASI ADALAH PENGHARGAAN TERHADAP KESEMPURNAAN."
-              }
-            }
+            { enName: "KOKTONG", cnName: "果冻", car: "Mazda RX-8 SE3P", 
+              spec: { engine: "13B-MSP Renesis", power: "232 HP", drive: "FR (Rear-Wheel Drive)", top: "235 km/h" } },
+            { enName: "WEIJIE", cnName: "伟杰", car: "Toyota 86 ZN6", 
+              spec: { engine: "FA20 Boxer", power: "200 HP", drive: "FR (Rear-Wheel Drive)", top: "226 km/h" } },
+            { enName: "GUANLE", cnName: "冠乐", car: "Silvia S13", 
+              spec: { engine: "SR20DET Turbo", power: "250 HP", drive: "FR (Drift Setup)", top: "240 km/h" } },
+            { enName: "ZIDIAN", cnName: "子典", car: "Gallardo LP560", 
+              spec: { engine: "5.2L V10", power: "552 HP", drive: "AWD", top: "325 km/h" } },
+            { enName: "JUNHAO", cnName: "俊豪", car: "Civic Type R FL5", 
+              spec: { engine: "K20C1 Turbo", power: "315 HP", drive: "FF", top: "275 km/h" } },
+            { enName: "YONGJIE", cnName: "勇杰", car: "Civic Type R FL5", 
+              spec: { engine: "K20C1 Turbo", power: "315 HP", drive: "FF", top: "275 km/h" } }
         ];
 
         let currentLang = 'cn';
@@ -296,34 +126,41 @@
         function renderTeam() {
             const list = document.getElementById('teamList');
             list.innerHTML = teamData.map(m => `
-                <div class="member-item" onclick="toggleDetails(this)">
+                <div class="member-item" onclick="this.classList.toggle('active')">
                     <div class="member-header">
                         <div class="name-main">
                             ${m.enName}
                             <span class="cn-sub">${m.cnName}</span>
                         </div>
-                        <div class="stars">${m.stars}</div>
+                        <div style="text-align: right; color: #00d4ff;">
+                            <small>${currentLang === 'cn' ? '座驾' : 'VEHICLE'}</small><br>
+                            ${m.car}
+                        </div>
                     </div>
                     <div class="member-details">
-                        <div class="ace-tag">${m.tag[currentLang]}</div>
-                        <div class="car-info">
-                            ${m.desc[currentLang]}<br>
-                            ${currentLang === 'cn' ? '专属座驾' : currentLang === 'en' ? 'Drive' : 'Kenderaan'}: <strong>${m.car}</strong>
-                        </div>
-                        <div class="passion-article-container">
-                            ${m.passion[currentLang]}
+                        <div class="spec-grid">
+                            <div class="spec-item">
+                                <span class="spec-label">${currentLang === 'cn' ? '引擎型号' : 'ENGINE'}</span>
+                                <span class="spec-value">${m.spec.engine}</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">${currentLang === 'cn' ? '最大功率' : 'POWER'}</span>
+                                <span class="spec-value">${m.spec.power}</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">${currentLang === 'cn' ? '驱动布局' : 'DRIVE'}</span>
+                                <span class="spec-value">${m.spec.drive}</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">${currentLang === 'cn' ? '最高时速' : 'TOP SPEED'}</span>
+                                <span class="spec-value">${m.spec.top}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             `).join('');
         }
 
-        // 控制列表展开/收起的 JS 函数
-        function toggleDetails(element) {
-            element.classList.toggle('active');
-        }
-
-        // 三语切换函数
         function changeLang(lang, btn) {
             currentLang = lang;
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
@@ -331,9 +168,7 @@
             renderTeam();
         }
 
-        // 初始渲染
         renderTeam();
     </script>
 </body>
 </html>
-    
