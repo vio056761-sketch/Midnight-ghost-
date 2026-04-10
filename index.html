@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Midnight Ghost | Official Site</title>
+    <title>Midnight Ghost | Team Profile</title>
     <style>
         :root { 
             --neon-blue: #00f2ff; 
@@ -15,104 +15,69 @@
             background: var(--dark-bg); 
             color: white; 
             font-family: 'Segoe UI', Roboto, sans-serif; 
-            margin: 0; 
-            padding: 20px; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            margin: 0; padding: 20px; 
+            display: flex; flex-direction: column; align-items: center;
         }
 
-        /* 顶部标题自适应 */
         .header { 
-            text-align: center; 
-            padding: 30px 0; 
-            width: 100%;
-            max-width: 1200px;
-            border-bottom: 2px solid var(--neon-blue);
-            margin-bottom: 40px;
-            position: relative;
+            text-align: center; padding: 30px 0; width: 100%; max-width: 1200px;
+            border-bottom: 2px solid var(--neon-blue); margin-bottom: 40px;
         }
 
         .header h1 { 
-            font-size: 2.5rem;
-            font-style: italic; 
-            letter-spacing: 8px; 
-            margin: 0; 
-            text-shadow: 0 0 20px var(--neon-blue); 
-            text-transform: uppercase;
+            font-size: 2.5rem; font-style: italic; letter-spacing: 8px; margin: 0; 
+            text-shadow: 0 0 20px var(--neon-blue); text-transform: uppercase;
         }
 
-        /* 核心：自动响应式网格布局 */
         .team-grid { 
-            display: grid; 
-            width: 100%;
-            max-width: 1200px;
-            /* 手机默认2列，电脑端自动增加列数 */
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 20px; 
+            display: grid; width: 100%; max-width: 1200px;
+            grid-template-columns: repeat(2, 1fr); gap: 20px; 
         }
 
-        /* 电脑端 (屏幕宽度大于 768px) 自动变 3 列 */
         @media (min-width: 768px) {
-            .team-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 30px;
-            }
+            .team-grid { grid-template-columns: repeat(3, 1fr); gap: 30px; }
             .header h1 { font-size: 4rem; }
         }
 
-        /* 蓝色科技感卡片 */
         .card { 
-            background: rgba(0, 30, 60, 0.4); 
+            background: rgba(0, 30, 60, 0.6); 
             border: 1px solid var(--neon-blue); 
-            border-radius: 12px; 
-            overflow: hidden;
+            border-radius: 12px; overflow: hidden;
             box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
             transition: all 0.3s ease;
-            position: relative;
         }
 
-        /* 电脑端鼠标滑过效果 */
         .card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
             box-shadow: 0 0 30px rgba(0, 242, 255, 0.4);
             border-color: var(--neon-pink);
         }
 
-        /* 照片容器 */
         .photo-wrapper {
-            width: 100%;
-            padding-top: 65%; /* 保持图片比例 */
-            position: relative;
-            background: #111;
+            width: 100%; padding-top: 65%; position: relative; background: #111;
         }
 
         .photo { 
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover; 
-            background-position: center;
-            transition: 0.5s;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
         }
 
-        .info { 
-            padding: 15px; 
-            text-align: center; 
-            background: linear-gradient(to top, #001a30, transparent);
-        }
-
-        .info h2 { font-size: 1.1rem; margin: 5px 0; color: var(--neon-blue); text-shadow: 0 0 5px var(--neon-blue); }
-        .info p { font-size: 0.8rem; color: #00fa9a; font-weight: bold; margin: 0; letter-spacing: 1px; }
-
-        .footer { 
-            margin-top: 60px; 
-            padding: 20px;
+        .info { padding: 15px; text-align: center; }
+        .info h2 { font-size: 1.1rem; margin: 5px 0; color: var(--neon-blue); }
+        .info .car-name { font-size: 0.75rem; color: var(--neon-pink); font-weight: bold; margin-bottom: 8px; }
+        
+        /* 简介样式 */
+        .desc { 
             font-size: 0.7rem; 
-            color: #444; 
-            text-align: center;
-            border-top: 1px solid #111;
-            width: 100%;
+            color: #ccc; 
+            line-height: 1.4; 
+            border-top: 1px solid rgba(0, 242, 255, 0.2);
+            padding-top: 10px;
+            margin-top: 5px;
+            text-align: left;
         }
+
+        .footer { margin-top: 60px; padding: 20px; font-size: 0.7rem; color: #444; text-align: center; width: 100%; }
     </style>
 </head>
 <body>
@@ -125,18 +90,48 @@
 <div class="team-grid" id="grid"></div>
 
 <div class="footer">
-    MIDNIGHT GHOST LEADER: KOKTONG<br>
-    © 2026 POWERED BY GITHUB PAGES
+    MIDNIGHT GHOST TEAM LEADER: KOKTONG<br>
+    © 2026 OFFICIAL WEBSITE
 </div>
 
 <script>
     const team = [
-        { name: "果冻 (KOKTONG)", car: "MAZDA RX-8 SE3P", img: "car_koktong.jpg" },
-        { name: "伟杰 (WEIJIE)", car: "TOYOTA 86 ZN6", img: "car_weijie.jpg" },
-        { name: "冠乐 (GUANLE)", car: "NISSAN SILVIA S13", img: "car_guanle.jpg" },
-        { name: "子典 (ZIDIAN)", car: "HONDA NSX (NA1)", img: "car_zidian.jpg" },
-        { name: "俊豪 (JUNHAO)", car: "CIVIC TYPE R FL5", img: "car_junhao.jpg" },
-        { name: "勇杰 (YONGJIE)", car: "CIVIC TYPE R FL5", img: "car_yongjie.jpg" }
+        { 
+            name: "果冻 (KOKTONG)", 
+            car: "MAZDA RX-8 SE3P", 
+            img: "car_koktong.jpg",
+            desc: "Midnight Ghost 创始人兼队长。转子引擎信徒，追求极致的过弯平衡与团队凝聚力。"
+        },
+        { 
+            name: "伟杰 (WEIJIE)", 
+            car: "TOYOTA 86 ZN6", 
+            img: "car_weijie.jpg",
+            desc: "核心成员。专注于后驱操控与漂移技术，是团队中不可或缺的技术中坚。"
+        },
+        { 
+            name: "冠乐 (GUANLE)", 
+            car: "NISSAN SILVIA S13", 
+            img: "car_guanle.jpg",
+            desc: "战术指挥。热爱JDM经典老车文化，擅长在复杂的赛道中寻找最佳线路。"
+        },
+        { 
+            name: "子典 (ZIDIAN)", 
+            car: "HONDA NSX (NA1)", 
+            img: "car_zidian.jpg",
+            desc: "竞速先锋。驾驶东瀛法拉利NSX，以精准的切入角度和高转速声浪征服街道。"
+        },
+        { 
+            name: "俊豪 (JUNHAO)", 
+            car: "CIVIC TYPE R FL5", 
+            img: "car_junhao.jpg",
+            desc: "团队协作关键成员。凭借FL5强大的前驱性能，在攻弯时展现出惊人的稳定性。"
+        },
+        { 
+            name: "勇杰 (YONGJIE)", 
+            car: "CIVIC TYPE R FL5", 
+            img: "car_yongjie.jpg",
+            desc: "核心成员。与俊豪并肩作战，双FL5组合是 Midnight Ghost 最坚固的阵线。"
+        }
     ];
 
     const grid = document.getElementById('grid');
@@ -147,7 +142,8 @@
             </div>
             <div class="info">
                 <h2>${m.name}</h2>
-                <p>${m.car}</p>
+                <div class="car-name">${m.car}</div>
+                <div class="desc">${m.desc}</div>
             </div>
         </div>
     `).join('');
