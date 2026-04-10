@@ -1,153 +1,288 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Midnight Ghost | Team Profile</title>
+    <title>Midnight Ghost | MAXIMUM READABILITY</title>
     <style>
-        :root { 
-            --neon-blue: #00f2ff; 
-            --neon-pink: #ff0055; 
-            --dark-bg: #000a12;
+        /* 1. 基础霸气排版 */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial Black', 'Impact', sans-serif; cursor: crosshair; }
+
+        body {
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        body { 
-            background: var(--dark-bg); 
-            color: white; 
-            font-family: 'Segoe UI', Roboto, sans-serif; 
-            margin: 0; padding: 20px; 
-            display: flex; flex-direction: column; align-items: center;
+        /* 背景氛围图层 (调淡一点，突出文字) */
+        body::after {
+            content: " ";
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('background.jpg'); 
+            background-size: cover; 
+            background-position: center;
+            opacity: 0.15; 
+            z-index: -1;
+            filter: saturate(0.5);
         }
 
-        .header { 
-            text-align: center; padding: 30px 0; width: 100%; max-width: 1200px;
-            border-bottom: 2px solid var(--neon-blue); margin-bottom: 40px;
+        /* 2. 顶栏：自适应布局 */
+        .top-bar {
+            position: fixed; top: 0; width: 100%; padding: 15px 20px;
+            display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px;
+            z-index: 1000; background: rgba(0,0,0,0.95); border-bottom: 2px solid #00d4ff;
+            backdrop-filter: blur(10px);
         }
+        .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
+        .ui-btn {
+            padding: 10px 20px; background: transparent; border: 2px solid #444;
+            color: #fff; font-size: 0.8rem; cursor: pointer; transition: 0.3s;
+            font-weight: bold; text-transform: uppercase;
+        }
+        .ui-btn.active { background: #00d4ff; border-color: #fff; color: #000; box-shadow: 0 0 20px #00d4ff; }
 
+        /* 3. 巨型标题区 */
+        .header { text-align: center; margin-top: 120px; margin-bottom: 70px; z-index: 10; padding: 0 15px; }
         .header h1 { 
-            font-size: 2.5rem; font-style: italic; letter-spacing: 8px; margin: 0; 
-            text-shadow: 0 0 20px var(--neon-blue); text-transform: uppercase;
+            font-size: clamp(4rem, 20vw, 11rem);
+            line-height: 0.8; font-style: italic;
+            text-shadow: 6px 6px 0px #ff0055, -2px -2px 0px #00d4ff;
+            letter-spacing: -3px;
+        }
+        .slogan {
+            font-size: clamp(1rem, 5vw, 2.2rem);
+            color: #fff; margin-top: 30px;
+            background: rgba(255, 0, 85, 0.9); padding: 15px 35px;
+            border: 3px solid #fff; display: inline-block;
+            font-weight: 900; text-transform: uppercase;
+            box-shadow: 0 0 30px rgba(255, 0, 85, 0.5);
         }
 
+        /* 4. 成员网格布局：手机1列，电脑3列，确保卡片够大 */
+        .team-grid-container { width: 98%; max-width: 1600px; z-index: 10; padding-bottom: 80px; }
         .team-grid { 
-            display: grid; width: 100%; max-width: 1200px;
-            grid-template-columns: repeat(2, 1fr); gap: 20px; 
+            display: grid; 
+            grid-template-columns: repeat(var(--cols, 3), 1fr); 
+            gap: 30px; 
         }
 
-        @media (min-width: 768px) {
-            .team-grid { grid-template-columns: repeat(3, 1fr); gap: 30px; }
-            .header h1 { font-size: 4rem; }
+        /* 5. 成员卡片 (高度大幅增加，放得下超大字) */
+        .member-card {
+            background: rgba(10, 10, 10, 0.98); border: 2px solid #333;
+            height: 700px; position: relative; overflow: hidden; transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.8);
         }
+        .member-card:hover { border-color: #00d4ff; transform: translateY(-10px) scale(1.02); }
 
-        .card { 
-            background: rgba(0, 30, 60, 0.6); 
-            border: 1px solid var(--neon-blue); 
-            border-radius: 12px; overflow: hidden;
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
-            transition: all 0.3s ease;
+        .card-photo-wrapper {
+            width: 100%; height: 100%; background-size: cover; background-position: center;
+            filter: grayscale(0.9) brightness(0.5); transition: 0.7s;
         }
+        .member-card:hover .card-photo-wrapper { filter: grayscale(0) brightness(1); transform: scale(1.1); }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.4);
-            border-color: var(--neon-pink);
+        .card-overlay {
+            position: absolute; bottom: 0; width: 100%; padding: 40px 30px;
+            background: linear-gradient(transparent, #000 85%);
+            pointer-events: none;
         }
+        .card-overlay h2 { font-size: 3rem; text-shadow: 0 0 20px #00d4ff; letter-spacing: -2px; }
+        .card-overlay .car-model { color: #ff0055; font-size: 1.1rem; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; }
 
-        .photo-wrapper {
-            width: 100%; padding-top: 65%; position: relative; background: #111;
-        }
-
-        .photo { 
+        /* 6. 🔥 详细资料弹出层：全新排版，超大文字 🔥 */
+        .tech-info {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover; background-position: center;
+            background: rgba(0, 8, 20, 0.98); padding: 40px;
+            display: flex; flex-direction: column;
+            opacity: 0; transform: translateY(100%); transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 4px solid #00d4ff;
+            overflow-y: auto; /* 简介太长可以滑动，但字体一定要大 */
         }
+        .member-card.active .tech-info { opacity: 1; transform: translateY(0); }
 
-        .info { padding: 15px; text-align: center; }
-        .info h2 { font-size: 1.1rem; margin: 5px 0; color: var(--neon-blue); }
-        .info .car-name { font-size: 0.75rem; color: var(--neon-pink); font-weight: bold; margin-bottom: 8px; }
+        /* 参数行排版：更清晰，更大 */
+        .spec-grid-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .spec-item-mini { border-bottom: 2px solid #222; padding-bottom: 8px; }
+        .spec-label-mini { color: #00d4ff; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
+        .spec-value-mini { color: #fff; font-size: 1.4rem; font-weight: bold; display: block; margin-top: 4px; }
         
-        /* 简介样式 */
-        .desc { 
-            font-size: 0.7rem; 
-            color: #ccc; 
-            line-height: 1.4; 
-            border-top: 1px solid rgba(0, 242, 255, 0.2);
-            padding-top: 10px;
-            margin-top: 5px;
-            text-align: left;
+        /* 🔥 超大号简介文字：所有人看清楚的那种 🔥 */
+        .long-desc { 
+            font-size: 1.6rem; /* 显著加大，确保清晰度 */
+            color: #fff; 
+            line-height: 1.6; 
+            margin-top: 30px; 
+            padding: 25px; 
+            background: rgba(0, 212, 255, 0.1); 
+            border-left: 8px solid #ff0055;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            border-radius: 4px;
         }
 
-        .footer { margin-top: 60px; padding: 20px; font-size: 0.7rem; color: #444; text-align: center; width: 100%; }
+        /* 手机端模式：强制卡片变大 */
+        body.mobile-mode .team-grid { --cols: 1 !important; gap: 40px;}
+        body.mobile-mode .member-card { height: 600px; }
+
+        body.pc-mode .team-grid { --cols: 3 !important; }
+
+        /* 真正手机端的自适应 (不需要点按钮) */
+        @media (max-width: 900px) {
+            body:not(.pc-mode) .team-grid { --cols: 1; gap: 40px; }
+            .header h1 { font-size: clamp(3rem, 15vw, 6rem); }
+            .member-card { height: 600px; }
+            .long-desc { font-size: 1.4rem; padding: 20px; } /* 手机端稍调小，确保不溢出 */
+            .card-overlay h2 { font-size: 2.5rem; }
+            .spec-value-mini { font-size: 1.2rem; }
+        }
     </style>
 </head>
-<body>
+<body class="pc-mode">
 
-<div class="header">
-    <h1>MIDNIGHT GHOST</h1>
-    <p style="font-size: 0.9rem; color: var(--neon-pink); letter-spacing: 3px;">STREET RACING TEAM / JOHOR BAHRU</p>
-</div>
-
-<div class="team-grid" id="grid"></div>
-
-<div class="footer">
-    MIDNIGHT GHOST TEAM LEADER: KOKTONG<br>
-    © 2026 OFFICIAL WEBSITE
-</div>
-
-<script>
-    const team = [
-        { 
-            name: "果冻 (KOKTONG)", 
-            car: "MAZDA RX-8 SE3P", 
-            img: "car_koktong.jpg",
-            desc: "Midnight Ghost 创始人兼队长。转子引擎信徒，追求极致的过弯平衡与团队凝聚力。"
-        },
-        { 
-            name: "伟杰 (WEIJIE)", 
-            car: "TOYOTA 86 ZN6", 
-            img: "car_weijie.jpg",
-            desc: "核心成员。专注于后驱操控与漂移技术，是团队中不可或缺的技术中坚。"
-        },
-        { 
-            name: "冠乐 (GUANLE)", 
-            car: "NISSAN SILVIA S13", 
-            img: "car_guanle.jpg",
-            desc: "战术指挥。热爱JDM经典老车文化，擅长在复杂的赛道中寻找最佳线路。"
-        },
-        { 
-            name: "子典 (ZIDIAN)", 
-            car: "HONDA NSX (NA1)", 
-            img: "car_zidian.jpg",
-            desc: "竞速先锋。驾驶东瀛法拉利NSX，以精准的切入角度和高转速声浪征服街道。"
-        },
-        { 
-            name: "俊豪 (JUNHAO)", 
-            car: "CIVIC TYPE R FL5", 
-            img: "car_junhao.jpg",
-            desc: "团队协作关键成员。凭借FL5强大的前驱性能，在攻弯时展现出惊人的稳定性。"
-        },
-        { 
-            name: "勇杰 (YONGJIE)", 
-            car: "CIVIC TYPE R FL5", 
-            img: "car_yongjie.jpg",
-            desc: "核心成员。与俊豪并肩作战，双FL5组合是 Midnight Ghost 最坚固的阵线。"
-        }
-    ];
-
-    const grid = document.getElementById('grid');
-    grid.innerHTML = team.map(m => `
-        <div class="card">
-            <div class="photo-wrapper">
-                <div class="photo" style="background-image: url('${m.img}')"></div>
-            </div>
-            <div class="info">
-                <h2>${m.name}</h2>
-                <div class="car-name">${m.car}</div>
-                <div class="desc">${m.desc}</div>
-            </div>
+    <div class="top-bar">
+        <div class="btn-group">
+            <button class="ui-btn active" id="btn-pc" onclick="setMode('pc')">🖥️ DESKTOP MODE</button>
+            <button class="ui-btn" id="btn-mb" onclick="setMode('mobile')">📱 MOBILE MODE</button>
         </div>
-    `).join('');
-</script>
+        <div class="btn-group">
+            <button class="ui-btn active" onclick="changeLang('cn', this)">中文资料</button>
+            <button class="ui-btn" onclick="changeLang('en', this)">EN PROFILE</button>
+            <button class="ui-btn" onclick="changeLang('ms', this)">BM PROFIL</button>
+        </div>
+    </div>
 
+    <div class="header">
+        <h1>MIDNIGHT GHOST</h1>
+        <div class="slogan" id="mainSlogan">我们只对引擎的咆哮声感兴趣</div>
+    </div>
+
+    <div class="team-grid-container">
+        <div class="team-grid" id="teamGrid"></div>
+    </div>
+
+    <script>
+        const teamData = [
+            { 
+                id: "koktong", enName: "KOKTONG", cnName: "果冻", msName: "KOKTONG",
+                car: "MAZDA RX-8 SE3P", img: "car_koktong.jpg",
+                specs: { eng: "13B-MSP Rotary", pwr: "232 HP", drv: "FR" },
+                desc: {
+                    cn: "Midnight Ghost 创始人。转子引擎的忠实信徒，负责团队决策与技术指导。在柔佛街道上追求极致的过弯艺术。",
+                    en: "Founder of Midnight Ghost. A true believer in Rotary engines, responsible for strategy and technical guidance. Pursuing the art of cornering.",
+                    ms: "Pengasas Midnight Ghost. Peminat setia enjin Rotary, bertanggungjawab atas strategi pasukan. Mengejar seni selekoh di jalanan Johor."
+                }
+            },
+            { 
+                id: "weijie", enName: "WEIJIE", cnName: "伟杰", msName: "WEIJIE",
+                car: "TOYOTA 86 ZN6", img: "car_weijie.jpg",
+                specs: { eng: "FA20 Boxer", pwr: "200 HP", drv: "FR" },
+                desc: {
+                    cn: "核心车手。精通 FR 布局操控，是团队中的漂移技术担当。专注于底盘调教与平衡性，让 86 在山路发挥极限。",
+                    en: "Core driver. Master of FR layout, lead drift technician. Focused on chassis tuning to push the 86 to its mountain limits.",
+                    ms: "Pemandu utama. Pakar pengendalian FR, juruteknik drift pasukan. Fokus pada pelarasan casis untuk prestasi maksimum."
+                }
+            },
+            { 
+                id: "guanle", enName: "GUANLE", cnName: "冠乐", msName: "GUANLE",
+                car: "NISSAN SILVIA S13", img: "car_guanle.jpg",
+                specs: { eng: "SR20DET Turbo", pwr: "250 HP", drv: "FR" },
+                desc: {
+                    cn: "战术顾问。对 90 年代 JDM 经典有深厚理解。S13 经过深度改装，兼顾了街道美学与强劲的直线爆发力。",
+                    en: "Tactical advisor. Deeply rooted in 90s JDM culture. His S13 combines street aesthetics with powerful acceleration.",
+                    ms: "Penasihat taktikal. Mempunyai minat mendalam terhadap JDM klasik. S13 beliau menggabungkan estetika jalanan dan kuasa pecutan."
+                }
+            },
+            { 
+                id: "zidian", enName: "ZIDIAN", cnName: "子典", msName: "ZIDIAN",
+                car: "HONDA NSX (NA1)", img: "car_zidian.jpg",
+                specs: { eng: "C30A VTEC", pwr: "274 HP", drv: "MR" },
+                desc: {
+                    cn: "竞速先锋。驾驶“东瀛法拉利”NSX，凭借中置后驱的完美比例，在高速巡航与攻弯中展现统治力。",
+                    en: "Racing Vanguard. Driving the legendary NSX, utilizing its MR layout to dominate high-speed cruises and sharp corners.",
+                    ms: "Perintis perlumbaan. Memandu NSX yang legenda, menggunakan susun atur MR untuk menguasai lebuh raya dan selekoh tajam."
+                }
+            },
+            { 
+                id: "junhao", enName: "JUNHAO", cnName: "俊豪", msName: "JUNHAO",
+                car: "CIVIC TYPE R FL5", img: "car_junhao.jpg",
+                specs: { eng: "K20C1 Turbo", pwr: "315 HP", drv: "FF" },
+                desc: {
+                    cn: "全能成员。利用 Type R FL5 强大的纽北基因，在复杂路段提供极佳的稳定性，是团队中最可靠的侧翼。",
+                    en: "All-rounder. Leveraging the FL5's track-bred DNA to provide stability in complex sectors. The team's most reliable flank.",
+                    ms: "Pemandu versatil. Menggunakan DNA perlumbaan FL5 untuk memberikan kestabilan di laluan mencabar. Ahli pasukan yang paling dipercayai."
+                }
+            },
+            { 
+                id: "yongjie", enName: "YONGJIE", cnName: "勇杰", msName: "YONGJIE",
+                car: "CIVIC TYPE R FL5", img: "car_yongjie.jpg",
+                specs: { eng: "K20C1 Turbo", pwr: "315 HP", drv: "FF" },
+                desc: {
+                    cn: "核心力量。与俊豪组成 FL5 双子星，负责在高压竞速中保持防线。对本田 K 系列引擎调教有独到见解。",
+                    en: "Core strength. Forms the FL5 duo with Junhao. Expert in Honda K-series engine tuning and high-pressure racing.",
+                    ms: "Kekuatan teras. Membentuk gandingan FL5 bersama Junhao. Pakar dalam modifikasi enjin Honda siri-K."
+                }
+            }
+        ];
+
+        let currentLang = 'cn';
+        const sloganText = {
+            cn: "我们只对引擎的咆哮声感兴趣",
+            en: "WE ARE ONLY INTERESTED IN THE ROAR OF THE ENGINE",
+            ms: "KAMI HANYA BERMINAT PADA DERUMAN ENJIN"
+        };
+
+        function setMode(mode) {
+            document.body.className = mode + '-mode';
+            document.getElementById('btn-pc').classList.toggle('active', mode === 'pc');
+            document.getElementById('btn-mb').classList.toggle('active', mode === 'mobile');
+        }
+
+        function changeLang(lang, btn) {
+            currentLang = lang;
+            const langBtns = btn.parentElement.querySelectorAll('.ui-btn');
+            langBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('mainSlogan').innerText = sloganText[lang];
+            renderTeam();
+        }
+
+        function renderTeam() {
+            const grid = document.getElementById('teamGrid');
+            const labels = {
+                eng: { cn: "动力单元", en: "POWER UNIT", ms: "UNIT KUASA" },
+                pwr: { cn: "最大马力", en: "MAX POWER", ms: "KUASA MAKSIMUM" },
+                drv: { cn: "驱动形式", en: "DRIVE TYPE", ms: "JENIS PACUAN" }
+            };
+
+            grid.innerHTML = teamData.map(m => `
+                <div class="member-card" onclick="this.classList.toggle('active')">
+                    <div class="card-photo-wrapper" style="background-image: url('${m.img}');"></div>
+                    <div class="card-overlay">
+                        <div class="car-model">${m.car}</div>
+                        <h2>${currentLang === 'cn' ? m.cnName : (currentLang === 'ms' ? m.msName : m.enName)}</h2>
+                    </div>
+                    <div class="tech-info">
+                        <div style="color:#00d4ff; border-bottom: 2px solid #00d4ff; margin-bottom: 25px; font-style:italic; letter-spacing:1px; font-size:1.2rem;">PERSONNEL DATA //</div>
+                        
+                        <div class="spec-grid-mini">
+                            <div class="spec-item-mini"><span class="spec-label-mini">${labels.eng[currentLang]}</span><span class="spec-value-mini">${m.specs.eng}</span></div>
+                            <div class="spec-item-mini"><span class="spec-label-mini">${labels.pwr[currentLang]}</span><span class="spec-value-mini">${m.specs.pwr}</span></div>
+                            <div class="spec-item-mini"><span class="spec-label-mini">${labels.drv[currentLang]}</span><span class="spec-value-mini">${m.specs.drv}</span></div>
+                        </div>
+
+                        <div class="long-desc">${m.desc[currentLang]}</div>
+                        <div style="margin-top:auto; font-size:0.7rem; color:#444; text-align:center;">[ TAP ANYWHERE TO CLOSE ]</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        renderTeam();
+    </script>
 </body>
 </html>
