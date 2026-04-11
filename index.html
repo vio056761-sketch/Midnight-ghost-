@@ -5,40 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Midnight Ghost | Middonaito Gōsuto</title>
     <style>
-        /* 1. 基础霸气排版 */
+        /* 1. 基础黑暗排版 */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial Black', 'Impact', sans-serif; }
         body { background: #000; color: #fff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; position: relative; }
-        body::after { content: " "; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('background.jpg'); background-size: cover; background-position: center; opacity: 0.15; z-index: -1; }
+        
+        /* 黑暗背景氛围图层 */
+        body::after { content: " "; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('background.jpg'); background-size: cover; background-position: center; opacity: 0.1; z-index: -1; }
 
         /* 2. 顶栏 (三语切换) */
-        .top-bar { position: fixed; top: 0; width: 100%; padding: 15px 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; z-index: 1000; background: rgba(0,0,0,0.95); border-bottom: 2px solid #00d4ff; backdrop-filter: blur(10px); }
+        .top-bar { position: fixed; top: 0; width: 100%; padding: 15px 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; z-index: 1000; background: rgba(0,0,0,0.98); border-bottom: 2px solid #00d4ff; backdrop-filter: blur(10px); }
         .ui-btn { padding: 8px 15px; background: transparent; border: 2px solid #444; color: #fff; font-size: 0.7rem; cursor: pointer; transition: 0.3s; font-weight: bold; }
         .ui-btn.active { background: #00d4ff; border-color: #fff; color: #000; box-shadow: 0 0 15px #00d4ff; }
 
-        /* 3. 巨型标题 */
-        .header { text-align: center; margin-top: 120px; margin-bottom: 40px; z-index: 10; padding: 0 15px; }
-        .header h1 { font-size: clamp(3rem, 15vw, 9rem); line-height: 0.8; font-style: italic; text-shadow: 6px 6px 0px #ff0055, -2px -2px 0px #00d4ff; letter-spacing: -3px; }
+        /* 3. 🔥 巨型车队标题 (两侧放置一个鬼 👻) 🔥 */
+        .header { text-align: center; margin-top: 130px; margin-bottom: 20px; z-index: 10; padding: 0 15px; width: 100%; }
+        .team-title-wrapper { display: flex; align-items: center; justify-content: center; gap: 15px; width: 100%; max-width: 1400px; margin: 0 auto; }
+        .header h1 { 
+            font-size: clamp(2rem, 10vw, 8rem); /* 缩写名字方便翻译后保持大小 */
+            line-height: 0.8; font-style: italic; 
+            text-shadow: 6px 6px 0px #ff0055, -2px -2px 0px #00d4ff; 
+            letter-spacing: -3px; 
+            text-transform: uppercase;
+        }
+        .ghost-icon { font-size: clamp(2rem, 10vw, 6rem); filter: drop-shadow(0 0 15px #fff); }
+
+        /* 4. 🔥 326 Power 致敬 & 云顶传说区 🔥 */
+        .manifesto-section { width: 90%; max-width: 1000px; text-align: center; margin-bottom: 80px; padding: 40px; z-index: 10; background: rgba(255, 255, 255, 0.03); border: 1px dashed #333; }
         
-        /* 4. 成员网格 */
+        .homage-line { font-size: 1.8rem; letter-spacing: 5px; color: #fff; font-weight: 900; }
+        .homage-sub { font-size: 0.8rem; color: #ff0055; letter-spacing: 3px; margin-top: 10px; font-weight: bold; }
+        .divider { width: 60px; height: 4px; background: #ff0055; margin: 30px auto; box-shadow: 0 0 15px #ff0055; }
+        
+        /* 云顶故事 */
+        .story-line { font-size: 1.5rem; line-height: 1.6; color: #ccc; font-style: italic; font-weight: bold; }
+        .car-tag { color: #fff; border-bottom: 3px solid #00d4ff; padding: 0 5px; }
+
+        /* 5. 成员网格 */
         .team-grid-container { width: 98%; max-width: 1600px; z-index: 10; }
         .team-grid { display: grid; grid-template-columns: repeat(var(--cols, 3), 1fr); gap: 30px; }
 
-        /* 5. 成员卡片 (彩色且带悬停放大) */
+        /* 6. 成员卡片 (彩色、超大引擎) */
         .member-card { background: #0a0a0a; border: 2px solid #333; height: 750px; position: relative; overflow: hidden; transition: 0.5s; cursor: pointer; }
         .member-card:hover { border-color: #00d4ff; transform: translateY(-10px); }
-        
-        .card-photo-wrapper { 
-            width: 100%; height: 100%; 
-            background-size: cover; background-position: center; 
-            filter: brightness(0.9); transition: 0.7s; 
-        }
+        .card-photo-wrapper { width: 100%; height: 100%; background-size: cover; background-position: center; filter: brightness(0.9); transition: 0.7s; }
         .member-card:hover .card-photo-wrapper { filter: brightness(1); transform: scale(1.05); }
 
         .card-overlay { position: absolute; bottom: 0; width: 100%; padding: 40px 30px; background: linear-gradient(transparent, rgba(0,0,0,0.9) 80%); }
         .card-overlay h2 { font-size: 3.5rem; text-shadow: 0 0 20px #00d4ff; letter-spacing: -2px; }
         .card-overlay .car-model { color: #ff0055; font-size: 1.2rem; font-weight: bold; text-transform: uppercase; }
 
-        /* 6. 超大引擎详情层 */
+        /* 超大引擎详情层 */
         .tech-info { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0, 5, 15, 1); padding: 25px; 
@@ -64,8 +80,10 @@
         .school-name { font-size: 1.2rem; color: #888; letter-spacing: 6px; font-weight: bold; margin-bottom: 15px; }
         .men-happiness { font-size: 2.8rem; color: #fff; font-weight: 900; text-shadow: 0 0 20px #ff0055; font-style: italic; }
 
+        /* 响应式 */
         body.mobile-mode .team-grid { --cols: 1 !important; }
         body.pc-mode .team-grid { --cols: 3 !important; }
+        @media (max-width: 900px) { .engine-name-massive { font-size: 2.5rem; } .homage-line { font-size: 1rem; } .story-line { font-size: 1rem; } }
     </style>
 </head>
 <body class="pc-mode">
@@ -82,7 +100,23 @@
         </div>
     </div>
 
-    <div class="header"><h1>MIDNIGHT GHOST</h1></div>
+    <div class="header">
+        <div class="team-title-wrapper">
+            <span class="ghost-icon">👻</span>
+            <h1 id="teamTitle">午夜幽灵</h1>
+            <span class="ghost-icon">👻</span>
+        </div>
+    </div>
+
+    <div class="manifesto-section">
+        <div class="homage-line">我々は 326 POWER に敬意を表する</div>
+        <div class="homage-sub">WE PAY RESPECT TO 326 POWER</div>
+        <div class="divider"></div>
+        <div class="story-line" id="dynamicStory">
+            凌晨4点的云顶，被一辆白色 <span class="car-tag">RX-8</span> 和 <span class="car-tag">GT 86</span> 划破了夜晚的宁静...
+        </div>
+    </div>
+
     <div class="team-grid-container"><div class="team-grid" id="teamGrid"></div></div>
 
     <footer class="final-footer">
@@ -96,7 +130,7 @@
                 cnName: "果冻", enName: "KOKTONG", msName: "KOKTONG", car: "MAZDA RX-8", 
                 engineName: "13B-MSP", engineImg: "engine_13b.jpg", cardImg: "car_koktong.jpg",
                 specs: { eng: "ROTARY TURBO", pwr: "300+ HP GOAL" },
-                desc: { cn: "Leader。精通中里毅重心转移法。转子引擎死忠，目标制霸云顶。", en: "Leader. Rotary loyalist. Goal: Dominating Genting.", ms: "Ketua. Pakar rotari. Matlamat: Menguasai Genting." }
+                desc: { cn: "Leader。转子引擎死忠，目标制霸云顶。", en: "Leader. Rotary loyalist. Goal: Dominating Genting.", ms: "Ketua Pasukan. Matlamat: Menguasai Genting." }
             },
             { 
                 cnName: "伟杰", enName: "WEIJIE", msName: "WEIJIE", car: "TOYOTA 86", 
@@ -120,17 +154,28 @@
                 cnName: "子典", enName: "ZIDIAN", msName: "ZIDIAN", car: "HONDA NSX", 
                 engineName: "C30A", engineImg: "engine_c30a.jpg", cardImg: "car_zidian.jpg",
                 specs: { eng: "V6 VTEC MR", pwr: "274 HP" },
-                desc: { cn: "竞速先锋。驾驶‘东瀛法拉利’，用中置后驱的完美比例统治弯道。", en: "Racing Vanguard. Dominating corners with the legendary MR NSX.", ms: "Perintis perlumbaan. Menguasai selekoh dengan NSX legenda." }
+                desc: { cn: "竞速先锋。驾驶‘东瀛法拉利’，统治弯道。", en: "Racing Vanguard. Dominating corners with NSX.", ms: "Perintis perlumbaan. Menguasai selekoh dengan NSX." }
             },
             { 
                 cnName: "俊豪", enName: "JUNHAO", msName: "JUNHAO", car: "CIVIC FC (PDRM STYLE)", 
                 engineName: "L15B7", engineImg: "engine_l15b.jpg", cardImg: "car_junhao.jpg",
                 specs: { eng: "VTEC TURBO", pwr: "173 HP" },
-                desc: { cn: "全能成员。驾驶‘公路战警’同款思域，拥有极佳的中段加速性能。", en: "All-rounder. Driving the iconic 'Patrol' style Civic FC.", ms: "Ahli serba boleh. Memandu Civic FC gaya 'PDRM'." }
+                desc: { cn: "全能成员。驾驶‘公路战警’同款思域，最稳健的侧翼。", en: "All-rounder. Driving iconic 'Patrol' Civic FC.", ms: "Ahli serba boleh. Memandu Civic FC gaya 'PDRM'." }
             }
         ];
 
         let currentLang = 'cn';
+        
+        // 🔥 翻译内容定义 🔥
+        const transData = {
+            teamTitle: { cn: "午夜幽灵", en: "MIDNIGHT GHOST", ms: "HANTU TENGAH MALAM" },
+            story: {
+                cn: "凌晨4点的云顶，被一辆白色 <span class='car-tag'>RX-8</span> 和 <span class='car-tag'>GT 86</span> 划破了夜晚的宁静...",
+                en: "Genting at 4 AM. Shattered by a white <span class='car-tag'>RX-8</span> and a <span class='car-tag'>GT 86</span>...",
+                ms: "Genting pada jam 4 pagi. Dipecahkan oleh <span class='car-tag'>RX-8</span> putih dan <span class='car-tag'>GT 86</span>..."
+            }
+        };
+
         function setMode(mode) {
             document.body.className = mode + '-mode';
             document.getElementById('btn-pc').classList.toggle('active', mode === 'pc');
@@ -142,14 +187,16 @@
             const langBtns = btn.parentElement.querySelectorAll('.ui-btn');
             langBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+            
+            // 🔥 翻译车队名和故事 🔥
+            document.getElementById('teamTitle').textContent = transData.teamTitle[lang];
+            document.getElementById('dynamicStory').innerHTML = transData.story[lang];
+            
             renderTeam();
         }
 
         function renderTeam() {
             const grid = document.getElementById('teamGrid');
-            const unitLabel = { cn: "动力单元", en: "UNIT", ms: "UNIT KUASA" };
-            const pwrLabel = { cn: "输出", en: "POWER", ms: "KUASA" };
-
             grid.innerHTML = teamData.map(m => `
                 <div class="member-card" onclick="this.classList.toggle('active')">
                     <div class="card-photo-wrapper" style="background-image: url('${m.cardImg}');"></div>
@@ -165,6 +212,7 @@
                             <div class="spec-item-mini"><span class="spec-value-mini">${m.specs.pwr}</span></div>
                         </div>
                         <div class="long-desc">${m.desc[currentLang]}</div>
+                        <div style="margin-top:auto; font-size:0.7rem; color:#444; text-align:center;">[ CLICK TO CLOSE ]</div>
                     </div>
                 </div>
             `).join('');
