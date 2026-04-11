@@ -5,56 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Midnight Ghost | Middonaito Gōsuto</title>
     <style>
-        /* 前面的基础代码保持不变... */
+        /* 1. 基础霸气排版 */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial Black', 'Impact', sans-serif; }
         body { background: #000; color: #fff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; position: relative; }
-        
+        body::after { content: " "; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('background.jpg'); background-size: cover; background-position: center; opacity: 0.15; z-index: -1; }
+
+        /* 2. 顶栏 (三语切换) */
         .top-bar { position: fixed; top: 0; width: 100%; padding: 15px 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; z-index: 1000; background: rgba(0,0,0,0.95); border-bottom: 2px solid #00d4ff; backdrop-filter: blur(10px); }
         .ui-btn { padding: 8px 15px; background: transparent; border: 2px solid #444; color: #fff; font-size: 0.7rem; cursor: pointer; transition: 0.3s; font-weight: bold; }
         .ui-btn.active { background: #00d4ff; border-color: #fff; color: #000; box-shadow: 0 0 15px #00d4ff; }
 
+        /* 3. 巨型标题 */
         .header { text-align: center; margin-top: 120px; margin-bottom: 40px; z-index: 10; padding: 0 15px; }
         .header h1 { font-size: clamp(3rem, 15vw, 9rem); line-height: 0.8; font-style: italic; text-shadow: 6px 6px 0px #ff0055, -2px -2px 0px #00d4ff; letter-spacing: -3px; }
-
-        /* 成员网格布局 */
+        
+        /* 4. 成员网格 */
         .team-grid-container { width: 98%; max-width: 1600px; z-index: 10; }
         .team-grid { display: grid; grid-template-columns: repeat(var(--cols, 3), 1fr); gap: 30px; }
 
+        /* 5. 成员卡片 (彩色且带悬停放大) */
         .member-card { background: #0a0a0a; border: 2px solid #333; height: 750px; position: relative; overflow: hidden; transition: 0.5s; cursor: pointer; }
-        .card-photo-wrapper { width: 100%; height: 100%; background-size: cover; background-position: center; filter: brightness(0.85); transition: 0.7s; }
+        .member-card:hover { border-color: #00d4ff; transform: translateY(-10px); }
+        
+        .card-photo-wrapper { 
+            width: 100%; height: 100%; 
+            background-size: cover; background-position: center; 
+            filter: brightness(0.9); transition: 0.7s; 
+        }
+        .member-card:hover .card-photo-wrapper { filter: brightness(1); transform: scale(1.05); }
+
         .card-overlay { position: absolute; bottom: 0; width: 100%; padding: 40px 30px; background: linear-gradient(transparent, rgba(0,0,0,0.9) 80%); }
         .card-overlay h2 { font-size: 3.5rem; text-shadow: 0 0 20px #00d4ff; letter-spacing: -2px; }
+        .card-overlay .car-model { color: #ff0055; font-size: 1.2rem; font-weight: bold; text-transform: uppercase; }
 
-        /* 🔥🔥 重点修改：引擎详情层 🔥🔥 */
+        /* 6. 超大引擎详情层 */
         .tech-info { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0, 5, 15, 1); /* 纯黑背景让图片更亮 */
-            padding: 20px; display: flex; flex-direction: column; 
+            background: rgba(0, 5, 15, 1); padding: 25px; 
+            display: flex; flex-direction: column; 
             opacity: 0; transform: translateY(100%); transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
             border: 4px solid #00d4ff; overflow-y: auto; z-index: 5; 
         }
         .member-card.active .tech-info { opacity: 1; transform: translateY(0); }
         
-        /* 让图片变得巨大且清晰 */
         .engine-visual { 
-            width: 100%; 
-            height: 450px; /* 🔥 从 250px 增加到 450px，占据近一半屏幕 */
-            background-size: contain; /* 改为 contain 保证引擎全貌不被裁剪 */
-            background-repeat: no-repeat;
-            background-position: center; 
-            background-color: #111;
-            border: 2px solid #ff0055; 
-            margin-bottom: 20px; 
-            box-shadow: 0 0 30px rgba(255, 0, 85, 0.3);
+            width: 100%; height: 450px; 
+            background-size: contain; background-repeat: no-repeat; background-position: center; 
+            background-color: #111; border: 2px solid #ff0055; 
+            margin-bottom: 20px; box-shadow: 0 0 30px rgba(255, 0, 85, 0.3);
         }
-
-        .engine-name-massive { font-size: 4.5rem; font-weight: 900; font-style: italic; color: #fff; line-height: 1; letter-spacing: -3px; text-shadow: 4px 4px 0px #ff0055; margin-bottom: 15px; border-bottom: 8px solid #00d4ff; display: inline-block; }
+        .engine-name-massive { font-size: 4.5rem; font-weight: 900; font-style: italic; color: #fff; line-height: 1; text-shadow: 4px 4px 0px #ff0055; border-bottom: 8px solid #00d4ff; display: inline-block; margin-bottom: 15px; }
         .spec-grid-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .spec-value-mini { color: #fff; font-size: 1.6rem; font-weight: bold; }
-        .long-desc { font-size: 1.5rem; color: #fff; line-height: 1.4; padding: 20px; background: rgba(255, 0, 85, 0.2); border-left: 8px solid #ff0055; }
+        .long-desc { font-size: 1.5rem; color: #ddd; line-height: 1.4; padding: 20px; background: rgba(255, 0, 85, 0.2); border-left: 8px solid #ff0055; }
 
-        /* 底部 */
+        /* 7. 底部 */
         .final-footer { width: 100%; padding: 80px 20px; text-align: center; margin-top: 50px; }
+        .school-name { font-size: 1.2rem; color: #888; letter-spacing: 6px; font-weight: bold; margin-bottom: 15px; }
         .men-happiness { font-size: 2.8rem; color: #fff; font-weight: 900; text-shadow: 0 0 20px #ff0055; font-style: italic; }
 
         body.mobile-mode .team-grid { --cols: 1 !important; }
@@ -84,20 +91,42 @@
     </footer>
 
     <script>
-        // teamData 数据保持不变，确保引擎图片名字对应
         const teamData = [
             { 
                 cnName: "果冻", enName: "KOKTONG", msName: "KOKTONG", car: "MAZDA RX-8", 
                 engineName: "13B-MSP", engineImg: "engine_13b.jpg", cardImg: "car_koktong.jpg",
                 specs: { eng: "ROTARY TURBO", pwr: "300+ HP GOAL" },
-                desc: { cn: "Leader。转子引擎死忠，目标制霸云顶。", en: "Leader. Goal: Dominating Genting.", ms: "Ketua Pasukan. Matlamat: Menguasai Genting." }
+                desc: { cn: "Leader。精通中里毅重心转移法。转子引擎死忠，目标制霸云顶。", en: "Leader. Rotary loyalist. Goal: Dominating Genting.", ms: "Ketua. Pakar rotari. Matlamat: Menguasai Genting." }
             },
-            // ... 伟杰、勇杰、冠乐、子典的数据 ...
+            { 
+                cnName: "伟杰", enName: "WEIJIE", msName: "WEIJIE", car: "TOYOTA 86", 
+                engineName: "FA20", engineImg: "engine_fa20.jpg", cardImg: "car_weijie.jpg",
+                specs: { eng: "BOXER NA", pwr: "200 HP" },
+                desc: { cn: "操控大师。负责在山路最前端侦查，完美的 FR 布局平衡。", en: "Handling master. Lead scout with perfect FR balance.", ms: "Pakar pengendalian. Peninjau utama dengan imbangan FR sempurna." }
+            },
+            { 
+                cnName: "勇杰", enName: "YONGJIE", msName: "YONGJIE", car: "CIVIC TYPE R FL5", 
+                engineName: "K20C1", engineImg: "engine_k20.jpg", cardImg: "car_yongjie.jpg",
+                specs: { eng: "VTEC TURBO", pwr: "315 HP" },
+                desc: { cn: "核心力量。负责高压竞速下的防线，本田 K 系列调校专家。", en: "The core strength. Expert in Honda K-series tuning.", ms: "Kekuatan teras. Pakar dalam talaan enjin Honda siri-K." }
+            },
+            { 
+                cnName: "冠乐", enName: "GUANLE", msName: "GUANLE", car: "NISSAN SILVIA S13", 
+                engineName: "SR20DET", engineImg: "engine_sr20.jpg", cardImg: "car_guanle.jpg",
+                specs: { eng: "I4 TURBO", pwr: "250 HP" },
+                desc: { cn: "战术顾问。深度改装的 S13，兼顾街头美学与直线爆发力。", en: "Tactical advisor. S13 combining street aesthetics and power.", ms: "Penasihat taktikal. S13 yang menggabungkan estetika dan kuasa." }
+            },
+            { 
+                cnName: "子典", enName: "ZIDIAN", msName: "ZIDIAN", car: "HONDA NSX", 
+                engineName: "C30A", engineImg: "engine_c30a.jpg", cardImg: "car_zidian.jpg",
+                specs: { eng: "V6 VTEC MR", pwr: "274 HP" },
+                desc: { cn: "竞速先锋。驾驶‘东瀛法拉利’，用中置后驱的完美比例统治弯道。", en: "Racing Vanguard. Dominating corners with the legendary MR NSX.", ms: "Perintis perlumbaan. Menguasai selekoh dengan NSX legenda." }
+            },
             { 
                 cnName: "俊豪", enName: "JUNHAO", msName: "JUNHAO", car: "CIVIC FC (PDRM STYLE)", 
                 engineName: "L15B7", engineImg: "engine_l15b.jpg", cardImg: "car_junhao.jpg",
                 specs: { eng: "VTEC TURBO", pwr: "173 HP" },
-                desc: { cn: "全能成员。驾驶‘公路战警’同款思域，最稳健的侧翼。", en: "All-rounder. Driving the iconic 'Patrol' style Civic FC.", ms: "Ahli serba boleh. Memandu Civic FC gaya 'PDRM'." }
+                desc: { cn: "全能成员。驾驶‘公路战警’同款思域，拥有极佳的中段加速性能。", en: "All-rounder. Driving the iconic 'Patrol' style Civic FC.", ms: "Ahli serba boleh. Memandu Civic FC gaya 'PDRM'." }
             }
         ];
 
@@ -118,6 +147,9 @@
 
         function renderTeam() {
             const grid = document.getElementById('teamGrid');
+            const unitLabel = { cn: "动力单元", en: "UNIT", ms: "UNIT KUASA" };
+            const pwrLabel = { cn: "输出", en: "POWER", ms: "KUASA" };
+
             grid.innerHTML = teamData.map(m => `
                 <div class="member-card" onclick="this.classList.toggle('active')">
                     <div class="card-photo-wrapper" style="background-image: url('${m.cardImg}');"></div>
